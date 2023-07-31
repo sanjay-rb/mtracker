@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:mtracker/models/transaction.dart';
+import 'package:mtracker/screens/add_transaction/add_transaction.dart';
+import 'package:mtracker/screens/home_screen/home_screen.dart';
+import 'package:mtracker/screens/update_transaction/update_transaction.dart';
+
+abstract class MTrackerRoutes {
+  static const String home = '/';
+  static const String add = '/add';
+  static const String update = '/update';
+
+  static PageRoute onGenerateRoute(RouteSettings settings) {
+    if (settings.name == home) {
+      return MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+        settings: settings,
+      );
+    } else if (settings.name == add) {
+      return MaterialPageRoute(
+        builder: (context) => const AddTransaction(),
+        settings: settings,
+      );
+    } else if (settings.name == update) {
+      final TransactionModel transaction =
+          settings.arguments as TransactionModel;
+      return MaterialPageRoute(
+        builder: (context) => UpdateTransaction(transaction: transaction),
+        settings: settings,
+      );
+    } else {
+      return MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+        settings: settings,
+      );
+    }
+  }
+}

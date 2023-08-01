@@ -137,7 +137,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       children: [
                         Expanded(
                           child: TextButton(
-                            onPressed: type == TransactionType.credit.name
+                            onPressed: type == TransactionType.credit
                                 ? null
                                 : () {
                                     AccountModel.getAllAccount()

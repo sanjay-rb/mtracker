@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   final String title;
@@ -62,7 +61,7 @@ class BottomSheetWidget extends StatelessWidget {
                 } else {
                   return InkWell(
                     onTap: () async {
-                      await launchUrlString(dbLink);
+                      Navigator.pop(context, 'new');
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

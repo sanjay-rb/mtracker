@@ -4,6 +4,7 @@ import 'package:mtracker/constants/constant.dart';
 import 'package:mtracker/models/account_model.dart';
 import 'package:mtracker/models/catagory_model.dart';
 import 'package:mtracker/models/transaction_model.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class UpdateTransaction extends StatefulWidget {
   final TransactionModel transaction;
@@ -171,10 +172,16 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                             dbLink: AccountModel.dbLink,
                                           );
                                         },
-                                      ).then((selected) {
-                                        setState(() {
-                                          fromAccount = selected;
-                                        });
+                                      ).then((selected) async {
+                                        if (selected == "new") {
+                                          await launchUrlString(
+                                            AccountModel.dbLink,
+                                          );
+                                        } else {
+                                          setState(() {
+                                            fromAccount = selected;
+                                          });
+                                        }
                                       });
                                     });
                                   },
@@ -200,10 +207,16 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                             dbLink: AccountModel.dbLink,
                                           );
                                         },
-                                      ).then((selected) {
-                                        setState(() {
-                                          toAccount = selected;
-                                        });
+                                      ).then((selected) async {
+                                        if (selected == "new") {
+                                          await launchUrlString(
+                                            AccountModel.dbLink,
+                                          );
+                                        } else {
+                                          setState(() {
+                                            toAccount = selected;
+                                          });
+                                        }
                                       });
                                     });
                                   },
@@ -232,10 +245,16 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                           dbLink: CategoryModel.dbLink,
                                         );
                                       },
-                                    ).then((selected) {
-                                      setState(() {
-                                        category = selected;
-                                      });
+                                    ).then((selected) async {
+                                      if (selected == "new") {
+                                        await launchUrlString(
+                                          AccountModel.dbLink,
+                                        );
+                                      } else {
+                                        setState(() {
+                                          category = selected;
+                                        });
+                                      }
                                     });
                                   });
                                 },

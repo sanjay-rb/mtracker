@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:mtracker/models/transaction.dart';
+import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:mtracker/screens/home_screen/components/history_list.dart';
 import 'package:mtracker/screens/home_screen/components/total_amount.dart';
@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Map<String, String> totalAmount = {
     "Month Spend": "0.0",
-    "Total Balance": "0.0",
   };
   List<TransactionModel> historyList = [];
   bool _isLoading = false;
@@ -34,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     Map<String, String> total = await GSheetService.getTotal();
-    List<TransactionModel> list = await GSheetService.getMonthTransaction();
+    List<TransactionModel> list = await TransactionModel.getMonthTransaction();
     setState(() {
       totalAmount = total;
       historyList = list;
@@ -94,8 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: () async {
-                            await launchUrlString(
-                                GSheetService.transactionSheetLink);
+                            await launchUrlString(TransactionModel.dbLink);
                           },
                           child: const Text("More"),
                         ),
@@ -152,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.startToEnd) {
-          GSheetService.deleteTransaction(transactionModel).then(
+          TransactionModel.deleteTransaction(transactionModel).then(
             (value) => _loadData(),
           );
         }

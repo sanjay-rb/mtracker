@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mtracker/constants/constant.dart';
-import 'package:mtracker/models/transaction.dart';
+import 'package:mtracker/models/transaction_model.dart';
 
 class HistoryList extends StatelessWidget {
   final TransactionModel transactionModel;
@@ -46,7 +46,7 @@ class HistoryList extends StatelessWidget {
                       Text(
                         transactionModel.category.split('.')[1],
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           color: Colors.black,
                         ),
                       ),
@@ -54,15 +54,15 @@ class HistoryList extends StatelessWidget {
                       Text(
                         transactionModel.note,
                         style: const TextStyle(
-                          fontSize: 10,
+                          fontSize: 12,
                           color: Colors.grey,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        formatDateTime(transactionModel.when),
+                        "${transactionModel.fromAccount.split('.')[1]} to ${transactionModel.toAccount.split('.')[1]}",
                         style: const TextStyle(
-                          fontSize: 8,
+                          fontSize: 10,
                           color: Colors.grey,
                         ),
                       ),
@@ -77,9 +77,12 @@ class HistoryList extends StatelessWidget {
                   child: Text(
                     "₹ ${formatCurrency(double.parse(transactionModel.amount))}",
                     style: TextStyle(
-                      color: double.parse(transactionModel.amount).isNegative
-                          ? Colors.red
-                          : Colors.green,
+                      color: transactionModel.type ==
+                              TransactionType.credit.name
+                          ? Colors.green
+                          : transactionModel.type == TransactionType.debit.name
+                              ? Colors.red
+                              : Colors.blue,
                       fontSize: 12,
                     ),
                     textAlign: TextAlign.end,

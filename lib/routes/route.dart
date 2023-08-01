@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mtracker/models/transaction.dart';
+import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/screens/add_transaction/add_transaction.dart';
 import 'package:mtracker/screens/home_screen/home_screen.dart';
 import 'package:mtracker/screens/update_transaction/update_transaction.dart';

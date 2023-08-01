@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
-          _loadData();
+          _navAdd(context);
         },
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.add),
       ),
       body: _isLoading
           ? const Center(
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(20),
               child: RefreshIndicator(
                 onRefresh: () async {
-                  _navAdd(context);
+                  _loadData();
                 },
                 child: ListView(
                   children: [
@@ -74,10 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Spacer(),
                         InkWell(
                           onTap: () {
-                            _navAdd(context);
+                            _loadData();
                           },
                           child: const Icon(
-                            Icons.add_circle,
+                            Icons.refresh,
                             size: 30,
                           ),
                         ),

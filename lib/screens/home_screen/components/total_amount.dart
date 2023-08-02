@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtracker/constants/constant.dart';
+import 'package:mtracker/models/account_model.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TotalAmountWidget extends StatelessWidget {
   const TotalAmountWidget({
@@ -48,6 +50,12 @@ class TotalAmountWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          TextButton(
+            onPressed: () async {
+              await launchUrlString(AccountModel.dbLink);
+            },
+            child: const Text("Amount Balance"),
           ),
         ],
       )),

@@ -5,7 +5,6 @@ import 'package:mtracker/routes/route.dart';
 import 'package:mtracker/screens/home_screen/components/history_list.dart';
 import 'package:mtracker/screens/home_screen/components/total_amount.dart';
 import 'package:mtracker/services/gsheet_service.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,24 +63,19 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(20),
               child: RefreshIndicator(
                 onRefresh: () async {
-                  _loadData();
+                  _navAdd(context);
                 },
                 child: ListView(
                   children: [
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            _loadData();
-                          },
-                          child: const Icon(
-                            Icons.refresh,
-                            size: 30,
-                          ),
+                    const Center(
+                      child: Text(
+                        "( Drag down to add )",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 8,
                         ),
-                      ],
+                      ),
                     ),
                     TotalAmountWidget(total: totalAmount),
                     Row(
@@ -93,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: () async {
-                            await launchUrlString(TransactionModel.dbLink);
+                            _loadData();
                           },
-                          child: const Text("More"),
+                          child: const Text("Refresh"),
                         ),
                       ],
                     ),

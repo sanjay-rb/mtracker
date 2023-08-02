@@ -5,7 +5,7 @@ import 'package:mtracker/services/gsheet_service.dart';
 
 class CategoryModel {
   static const dbLink =
-      "https://docs.google.com/spreadsheets/d/1SE5pbs8gcUBVQUxHMvfKvNl2p53hJ0iwa6y2-NitPIU/edit#gid=421690909";
+      "https://docs.google.com/spreadsheets/d/1SE5pbs8gcUBVQUxHMvfKvNl2p53hJ0iwa6y2-NitPIU/edit?usp=sharing#gid=421690909";
 
   static Future<List<CategoryModel>> getAllCategory() async {
     List<Map<String, String>>? rows =

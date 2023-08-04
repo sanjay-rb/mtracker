@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:mtracker/constants/constant.dart';
+import 'package:mtracker/constants/assets.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:mtracker/screens/home_screen/components/history_list.dart';
@@ -68,7 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: MediaQuery.of(context).size.width * 0.2,
-                  child: Image.network(refreshGif, fit: BoxFit.cover),
+                  child: Image.asset(
+                    Assets.assetsImagesRefreshLoader,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             )
@@ -81,7 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: MaterialIndicatorDelegate(
                   clipBehavior: Clip.antiAlias,
                   builder: (context, controller) {
-                    return Image.network(refreshGif, fit: BoxFit.cover);
+                    return Image.asset(
+                      Assets.assetsImagesRefreshLoader,
+                      fit: BoxFit.cover,
+                    );
                   },
                 ),
                 child: ListView(

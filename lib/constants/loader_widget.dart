@@ -17,6 +17,8 @@ class LoaderWidget extends StatelessWidget {
           child: Image.asset(
             Assets.assetsImagesRefreshLoader,
             fit: BoxFit.cover,
+            cacheHeight: 1,
+            cacheWidth: 1,
           ),
         ),
       ),

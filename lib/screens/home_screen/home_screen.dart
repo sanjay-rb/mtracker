@@ -76,8 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.antiAlias,
                   backgroundColor: Colors.deepPurple,
                   builder: (context, controller) {
-                    return Transform.rotate(
-                      angle: controller.value,
+                    return Transform.scale(
+                      scale: controller.value,
                       child: const Icon(
                         Icons.add,
                         color: Colors.white,

@@ -7,6 +7,9 @@ String defaultFromAccount = "🏦.HDFC";
 String defaultToAccount = "🚪.General";
 TransactionType defaultTransactionType = TransactionType.debit;
 
+String refreshGif =
+    "https://cdn.dribbble.com/users/1864713/screenshots/10569127/media/5c55967e67316a13184d970c26e4a5c7.gif";
+
 String formatDateTime(DateTime when) {
   return DateFormat("dd-MMM-yyyy hh:mm:ss a").format(when);
 }

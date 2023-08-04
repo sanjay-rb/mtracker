@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  custom_refresh_indicator: ^2.2.1
   flutter:
     sdk: flutter
   google_fonts: ^4.0.4
@@ -78,7 +79,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
 flutter_assets:
   assets_path: assets/
   output_path: lib/constants/

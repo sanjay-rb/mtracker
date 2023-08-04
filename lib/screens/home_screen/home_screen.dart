@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:mtracker/constants/constant.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:mtracker/screens/home_screen/components/history_list.dart';
@@ -49,22 +51,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.small(
-        onPressed: () {
-          _navAdd(context);
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: _isLoading
+          ? null
+          : FloatingActionButton.small(
+              onPressed: () {
+                _navAdd(context);
+              },
+              child: const Icon(Icons.add),
+            ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.width * 0.2,
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: MediaQuery.of(context).size.width * 0.2,
+                  child: Image.network(refreshGif, fit: BoxFit.cover),
+                ),
+              ),
             )
           : Padding(
               padding: const EdgeInsets.all(20),
-              child: RefreshIndicator(
+              child: CustomRefreshIndicator(
                 onRefresh: () async {
                   _navAdd(context);
                 },
+                builder: MaterialIndicatorDelegate(
+                  clipBehavior: Clip.antiAlias,
+                  builder: (context, controller) {
+                    return Image.network(refreshGif, fit: BoxFit.cover);
+                  },
+                ),
                 child: ListView(
                   children: [
                     const SizedBox(height: 10),

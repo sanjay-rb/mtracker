@@ -21,11 +21,19 @@ class _HomeScreenState extends State<HomeScreen> {
   };
   List<TransactionModel> historyList = [];
   bool _isLoading = false;
+  late AssetImage refreshLoader;
 
   @override
   void initState() {
     super.initState();
+    refreshLoader = const AssetImage(Assets.assetsImagesRefreshLoader);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    refreshLoader.evict();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -68,10 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: MediaQuery.of(context).size.width * 0.2,
-                  child: Image.asset(
-                    Assets.assetsImagesRefreshLoader,
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image(image: refreshLoader, fit: BoxFit.cover),
                 ),
               ),
             )
@@ -84,10 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: MaterialIndicatorDelegate(
                   clipBehavior: Clip.antiAlias,
                   builder: (context, controller) {
-                    return Image.asset(
-                      Assets.assetsImagesRefreshLoader,
-                      fit: BoxFit.cover,
-                    );
+                    return Image(image: refreshLoader, fit: BoxFit.cover);
                   },
                 ),
                 child: ListView(

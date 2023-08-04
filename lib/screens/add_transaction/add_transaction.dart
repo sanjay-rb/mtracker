@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtracker/constants/bottom_sheet_widget.dart';
 import 'package:mtracker/constants/constant.dart';
+import 'package:mtracker/constants/loader_widget.dart';
 
 import 'package:mtracker/models/account_model.dart';
 import 'package:mtracker/models/catagory_model.dart';
@@ -28,9 +29,7 @@ class _AddTransactionState extends State<AddTransaction> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const LoaderWidget()
           : Padding(
               padding: const EdgeInsets.all(20),
               child: Form(

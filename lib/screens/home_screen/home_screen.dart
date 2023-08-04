@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:mtracker/constants/assets.dart';
+import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:mtracker/screens/home_screen/components/history_list.dart';
@@ -21,18 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
   };
   List<TransactionModel> historyList = [];
   bool _isLoading = false;
-  late AssetImage refreshLoader;
 
   @override
   void initState() {
     super.initState();
-    refreshLoader = const AssetImage(Assets.assetsImagesRefreshLoader);
     _loadData();
   }
 
   @override
   void dispose() {
-    refreshLoader.evict();
     super.dispose();
   }
 
@@ -68,18 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Icon(Icons.add),
             ),
       body: _isLoading
-          ? Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  MediaQuery.of(context).size.width * 0.2,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: MediaQuery.of(context).size.width * 0.2,
-                  child: Image(image: refreshLoader, fit: BoxFit.cover),
-                ),
-              ),
-            )
+          ? const LoaderWidget()
           : Padding(
               padding: const EdgeInsets.all(20),
               child: CustomRefreshIndicator(
@@ -88,8 +74,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 builder: MaterialIndicatorDelegate(
                   clipBehavior: Clip.antiAlias,
+                  backgroundColor: Colors.deepPurple,
                   builder: (context, controller) {
-                    return Image(image: refreshLoader, fit: BoxFit.cover);
+                    return Transform.rotate(
+                      angle: controller.value,
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    );
                   },
                 ),
                 child: ListView(

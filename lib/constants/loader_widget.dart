@@ -33,10 +33,9 @@ class _LoaderWidgetState extends State<LoaderWidget>
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 80 * images.length),
     )..repeat();
     _animation = IntTween(begin: 0, end: 5).animate(_controller);
   }

@@ -5,6 +5,7 @@ import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/account_model.dart';
 import 'package:mtracker/models/catagory_model.dart';
 import 'package:mtracker/models/transaction_model.dart';
+import 'package:mtracker/routes/route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UpdateTransaction extends StatefulWidget {
@@ -59,9 +60,12 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacementNamed(
+                              context,
+                              MTrackerRoutes.home,
+                            );
                           },
-                          child: const Text("Cancel"),
+                          child: const Text("Home"),
                         ),
                         const Spacer()
                       ],
@@ -305,7 +309,10 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                   _isLoading = false;
                                 });
                                 if (value) {
-                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    MTrackerRoutes.home,
+                                  );
                                 }
                               });
                             }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mtracker/constants/bottom_nav_widget.dart';
 import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:http/http.dart' as http;
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -17,13 +19,17 @@ class _StatsScreenState extends State<StatsScreen> {
   final totalSpendImage =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vS0Fylycl4uAvdE4P-_uCuNg97SbTGYjNgITALdHoyu1SineO72u-NLIeUNRMdcTOCtr5Es2Dczazp4/pubchart?oid=2001720007";
 
-  final Key _imageMonthSpendKey = UniqueKey();
-  final Key _imageTotalSpendKey = UniqueKey();
-
   @override
   void initState() {
     super.initState();
-    // _precacheImage(context);
+  }
+
+  Future<Uint8List> _fetchImage(imageUrl) async {
+    final response = await http.get(Uri.parse(imageUrl));
+    if (response.statusCode == 200) {
+      return Future.value(response.bodyBytes);
+    }
+    return Future.value(Uint8List(1));
   }
 
   @override
@@ -69,38 +75,36 @@ class _StatsScreenState extends State<StatsScreen> {
           const SizedBox(height: 10),
           const Text("This Month Spend Stats"),
           const SizedBox(height: 10),
-          InkWell(
-            onTap: () {
-              launchUrlString("$monthSpendImage&format=interactive");
-            },
-            child: Image.network(
-              "$monthSpendImage&format=image",
-              key: _imageMonthSpendKey,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
+          FutureBuilder(
+            future: _fetchImage("$monthSpendImage&format=image"),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return const LoaderWidget();
-              },
-            ),
+              }
+              return InkWell(
+                onTap: () {
+                  launchUrlString("$monthSpendImage&format=interactive");
+                },
+                child: Image.memory(snapshot.data!),
+              );
+            },
           ),
           const SizedBox(height: 10),
           const Text("Total Spend Stats"),
           const SizedBox(height: 10),
-          InkWell(
-            onTap: () {
-              launchUrlString("$totalSpendImage&format=interactive");
-            },
-            child: Image.network(
-              "$totalSpendImage&format=image",
-              key: _imageTotalSpendKey,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
+          FutureBuilder(
+            future: _fetchImage("$totalSpendImage&format=image"),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return const LoaderWidget();
-              },
-            ),
+              }
+              return InkWell(
+                onTap: () {
+                  launchUrlString("$totalSpendImage&format=interactive");
+                },
+                child: Image.memory(snapshot.data!),
+              );
+            },
           ),
         ]),
       ),

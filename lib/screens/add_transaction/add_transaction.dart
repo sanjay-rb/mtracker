@@ -314,7 +314,10 @@ class _AddTransactionState extends State<AddTransaction> {
                                   _isLoading = false;
                                 });
                                 if (value) {
-                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    MTrackerRoutes.home,
+                                  );
                                 }
                               });
                             }

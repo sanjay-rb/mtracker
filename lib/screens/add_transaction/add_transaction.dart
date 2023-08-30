@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mtracker/constants/bottom_nav_widget.dart';
 import 'package:mtracker/constants/bottom_sheet_widget.dart';
 import 'package:mtracker/constants/constant.dart';
 import 'package:mtracker/constants/loader_widget.dart';
@@ -6,6 +7,7 @@ import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/account_model.dart';
 import 'package:mtracker/models/catagory_model.dart';
 import 'package:mtracker/models/transaction_model.dart';
+import 'package:mtracker/routes/route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AddTransaction extends StatefulWidget {
@@ -28,6 +30,27 @@ class _AddTransactionState extends State<AddTransaction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _isLoading
+          ? null
+          : BottomNavWidget(
+              onClick: (id) {
+                switch (id) {
+                  case Buttons.home:
+                    Navigator.pushReplacementNamed(
+                      context,
+                      MTrackerRoutes.home,
+                    );
+                    break;
+                  case Buttons.stats:
+                    Navigator.pushReplacementNamed(
+                      context,
+                      MTrackerRoutes.stats,
+                    );
+                    break;
+                  default:
+                }
+              },
+            ),
       body: _isLoading
           ? const LoaderWidget()
           : Padding(
@@ -41,9 +64,12 @@ class _AddTransactionState extends State<AddTransaction> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacementNamed(
+                              context,
+                              MTrackerRoutes.home,
+                            );
                           },
-                          child: const Text("Cancel"),
+                          child: const Text("Home"),
                         ),
                         const Spacer()
                       ],

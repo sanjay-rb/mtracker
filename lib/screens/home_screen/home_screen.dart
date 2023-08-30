@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:mtracker/constants/bottom_nav_widget.dart';
 import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
@@ -47,22 +48,29 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _navAdd(BuildContext context) async {
-    Navigator.pushNamed(context, MTrackerRoutes.add).then(
-      (value) => _loadData(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _isLoading
+      bottomNavigationBar: _isLoading
           ? null
-          : FloatingActionButton.small(
-              onPressed: () {
-                _navAdd(context);
+          : BottomNavWidget(
+              onClick: (id) {
+                switch (id) {
+                  case Buttons.stats:
+                    Navigator.pushReplacementNamed(
+                      context,
+                      MTrackerRoutes.stats,
+                    );
+                    break;
+                  case Buttons.add:
+                    Navigator.pushReplacementNamed(
+                      context,
+                      MTrackerRoutes.add,
+                    );
+                    break;
+                  default:
+                }
               },
-              child: const Icon(Icons.add),
             ),
       body: _isLoading
           ? const LoaderWidget()
@@ -70,7 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(20),
               child: CustomRefreshIndicator(
                 onRefresh: () async {
-                  _navAdd(context);
+                  Navigator.pushReplacementNamed(
+                    context,
+                    MTrackerRoutes.add,
+                  );
                 },
                 builder: MaterialIndicatorDelegate(
                   clipBehavior: Clip.antiAlias,

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/screens/add_transaction/add_transaction.dart';
 import 'package:mtracker/screens/home_screen/home_screen.dart';
+import 'package:mtracker/screens/stats_screen/stats_screen.dart';
 import 'package:mtracker/screens/update_transaction/update_transaction.dart';
 
 abstract class MTrackerRoutes {
   static const String home = '/';
   static const String add = '/add';
   static const String update = '/update';
+  static const String stats = '/stats';
 
   static PageRoute onGenerateRoute(RouteSettings settings) {
     if (settings.name == home) {
@@ -25,6 +27,11 @@ abstract class MTrackerRoutes {
           settings.arguments as TransactionModel;
       return MaterialPageRoute(
         builder: (context) => UpdateTransaction(transaction: transaction),
+        settings: settings,
+      );
+    } else if (settings.name == stats) {
+      return MaterialPageRoute(
+        builder: (context) => const StatsScreen(),
         settings: settings,
       );
     } else {

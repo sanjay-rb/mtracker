@@ -127,11 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10),
                     Column(
                       children: List.generate(
-                              historyList.length,
-                              (index) =>
-                                  historyListGenerator(historyList[index]))
-                          .reversed
-                          .toList(),
+                          historyList.length,
+                          (index) => historyListGenerator(
+                              historyList[index], index)).reversed.toList(),
                     ),
                   ],
                 ),
@@ -140,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget historyListGenerator(TransactionModel transactionModel) {
+  Widget historyListGenerator(TransactionModel transactionModel, int index) {
     return Dismissible(
       key: Key(transactionModel.id),
       background: Container(
@@ -175,9 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.startToEnd) {
-          TransactionModel.deleteTransaction(transactionModel).then(
-            (value) => _loadData(),
-          );
+          TransactionModel.deleteTransaction(transactionModel);
+          setState(() {
+            historyList.removeAt(index);
+          });
         }
       },
       child: HistoryList(transactionModel: transactionModel),

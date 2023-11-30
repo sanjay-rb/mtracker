@@ -295,11 +295,15 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                               });
                               TransactionModel transactionModel =
                                   widget.transaction.copyWith(
-                                amount: _amountController.text,
+                                id: widget.transaction.id,
                                 category: category,
+                                note: _noteController.text,
+                                amount: _amountController.text,
+                                dateTime: formatStringDateTime(
+                                  widget.transaction.dateTime,
+                                ),
                                 fromAccount: fromAccount,
                                 toAccount: toAccount,
-                                note: _noteController.text,
                                 type: type.name,
                               );
                               TransactionModel.updateTransaction(

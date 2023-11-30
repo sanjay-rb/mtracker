@@ -11,7 +11,7 @@ String refreshGif =
     "https://cdn.dribbble.com/users/1864713/screenshots/10569127/media/5c55967e67316a13184d970c26e4a5c7.gif";
 
 String formatDateTime(DateTime when) {
-  return DateFormat("dd-MMM-yyyy hh:mm:ss a").format(when);
+  return DateFormat("MM/dd/yyyy").format(when);
 }
 
 String formatStringDateTime(String when) {
@@ -20,7 +20,7 @@ String formatStringDateTime(String when) {
     isUtc: true,
   );
 
-  return DateFormat("dd-MMM-yyyy hh:mm:ss a (E)").format(dateTime);
+  return DateFormat("MM/dd/yyyy").format(dateTime);
 }
 
 String formatCurrency(double value) {

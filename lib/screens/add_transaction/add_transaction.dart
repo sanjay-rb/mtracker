@@ -297,13 +297,14 @@ class _AddTransactionState extends State<AddTransaction> {
                               setState(() {
                                 _isLoading = true;
                               });
+                              DateTime dt = DateTime.now();
                               TransactionModel transactionModel =
                                   TransactionModel(
-                                id: 'ID${DateTime.now().microsecondsSinceEpoch}',
+                                id: 'ID${dt.microsecondsSinceEpoch}',
                                 category: category,
                                 note: _noteController.text,
                                 amount: _amountController.text,
-                                dateTime: DateTime.now().toString(),
+                                dateTime: formatDateTime(dt),
                                 fromAccount: fromAccount,
                                 toAccount: toAccount,
                                 type: type.name,

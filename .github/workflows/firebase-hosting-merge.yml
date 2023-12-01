@@ -34,7 +34,7 @@ jobs:
         run: dart analyze .
 
       - name: Creating Gsheet Key File
-        run: touch key.json; echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}" > assets/key.json;
+        run: ls -ltar;touch key.json; echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}" > assets/key.json;
 
       - name: Build Web App
         run: flutter build web --release

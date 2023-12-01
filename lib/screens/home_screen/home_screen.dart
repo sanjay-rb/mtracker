@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10),
                     const Center(
                       child: Text(
-                        "( Drag down to add )",
+                        "( Drag down to add test )",
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 8,

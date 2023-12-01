@@ -16,30 +16,30 @@ jobs:
       - name: Check Path
         run: touch key.json; echo "hi" > assets/key.json;cat assets/key.json
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
+      # - name: Setup Java
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: '12.x'
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '3.7.2'
-          channel: 'stable'
+      # - name: Setup Flutter
+      #   uses: subosito/flutter-action@v1
+      #   with:
+      #     flutter-version: '3.7.2'
+      #     channel: 'stable'
         
-      - name: Flutter Version Check
-        run: flutter --version
+      # - name: Flutter Version Check
+      #   run: flutter --version
 
-      - name: Run flutter pub get
-        run: flutter pub get
+      # - name: Run flutter pub get
+      #   run: flutter pub get
 
-      - name: Build Web App
-        run: flutter build web --release
+      # - name: Build Web App
+      #   run: flutter build web --release
 
-      - name: Deploying to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MTRACKER_394207 }}'
-          channelId: live
-          projectId: mtracker-394207
+      # - name: Deploying to Firebase
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MTRACKER_394207 }}'
+      #     channelId: live
+      #     projectId: mtracker-394207

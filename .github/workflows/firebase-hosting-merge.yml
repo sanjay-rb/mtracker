@@ -13,9 +13,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Creating Gsheet Key File
-        run: touch key.json; echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}" > assets/key.json;
-
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
@@ -35,6 +32,9 @@ jobs:
       
       - name: Analyze Code
         run: dart analyze .
+
+      - name: Creating Gsheet Key File
+        run: touch key.json; echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}" > assets/key.json;
 
       - name: Build Web App
         run: flutter build web --release
@@ -72,7 +72,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Deployment Failed: https://mtracker-394207.web.app/
-            
+
             User: ${{ github.actor }}
 
             Commit message: ${{ github.event.commits[0].message }}

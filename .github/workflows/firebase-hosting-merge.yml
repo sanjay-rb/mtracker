@@ -62,7 +62,7 @@ jobs:
               See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
       
       - name: Send Failure Telegram Message
-        if: success()
+        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

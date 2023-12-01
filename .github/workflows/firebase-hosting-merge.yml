@@ -6,8 +6,10 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+
 jobs:
-  build_and_deploy:
+  setting_up_floor:
+    name: Setting Up Floor
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -29,10 +31,27 @@ jobs:
         
       - name: Flutter Version Check
         run: flutter --version
-
+      
       - name: Run flutter pub get
         run: flutter pub get
+  
+  perform_statis_analysis:
+    name: Perform Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Code Format
+        run: dart format . --set-exit-if-changed
+      
+      - name: Generate code
+        run: dart run build_runner build
+      
+      - name: Analyze code
+        run: dart analyze .
 
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Web App
         run: flutter build web --release
 
@@ -43,7 +62,11 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MTRACKER_394207 }}'
           channelId: live
           projectId: mtracker-394207
-      
+  
+  send_notification:
+    name: Send Notification
+    runs-on: ubuntu-latest
+    steps:  
       - name: Send Success Telegram Message
         if: success()
         uses: appleboy/telegram-action@master

@@ -54,15 +54,15 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deployment Success: 
-              https://mtracker-394207.web.app/
-            Commit Info :
-              ${{ github.actor }} created commit:
-              Commit message: ${{ github.event.commits[0].message }}
-              
-              Repository: ${{ github.repository }}
-              
-              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Deployment Success: https://mtracker-394207.web.app/
+
+            User: ${{ github.actor }}
+
+            Commit message: ${{ github.event.commits[0].message }}
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
       
       - name: Send Failure Telegram Message
         if: failure()
@@ -71,12 +71,12 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deployment Failed: 
-              https://mtracker-394207.web.app/
-            Commit Info :
-              ${{ github.actor }} created commit:
-              Commit message: ${{ github.event.commits[0].message }}
-              
-              Repository: ${{ github.repository }}
-              
-              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Deployment Failed: https://mtracker-394207.web.app/
+            
+            User: ${{ github.actor }}
+
+            Commit message: ${{ github.event.commits[0].message }}
+
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}

@@ -14,7 +14,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Creating Gsheet Key File
-        run: ls -ltar;touch key.json; echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}" > assets/key.json; cat assets/key.json 
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "key.json"
+          json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}
+          dir: 'assets/'
       
       - name: Setup Java
         uses: actions/setup-java@v1

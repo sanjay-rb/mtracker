@@ -62,7 +62,7 @@ jobs:
 
             User: ${{ github.actor }}
 
-            Commit message: ${{ github.event.commits[0].message }}
+            Commit message: ${{ github.event.commits.message }}
 
             Repository: ${{ github.repository }}
 
@@ -79,7 +79,7 @@ jobs:
 
             User: ${{ github.actor }}
 
-            Commit message: ${{ github.event.commits[0].message }}
+            Commit message: ${{ github.event.commits.message }}
 
             Repository: ${{ github.repository }}
             

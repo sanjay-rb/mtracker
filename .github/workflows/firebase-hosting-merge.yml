@@ -36,6 +36,7 @@ jobs:
         run: flutter pub get
   
   perform_statis_analysis:
+    needs: setting_up_floor
     name: Perform Static Analysis
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +50,7 @@ jobs:
         run: dart analyze .
 
   build_and_deploy:
+    needs: perform_statis_analysis
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
@@ -64,6 +66,7 @@ jobs:
           projectId: mtracker-394207
   
   send_notification:
+    needs: build_and_deploy
     name: Send Notification
     runs-on: ubuntu-latest
     steps:  

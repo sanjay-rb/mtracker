@@ -2,6 +2,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:mtracker/constants/bottom_nav_widget.dart';
+import 'package:mtracker/constants/constant.dart';
 import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
@@ -17,9 +18,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Map<String, String> totalAmount = {
-    "Month Spend": "0.0",
-  };
+  double totalAmount = 0.0;
+  // Map<String, String> totalAmount = {
+  //   "Month Spend": "0.0",
+  // };
   List<TransactionModel> historyList = [];
   bool _isLoading = false;
 
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, String> total = await GSheetService.getTotal();
     List<TransactionModel> list = await TransactionModel.getMonthTransaction();
     setState(() {
-      totalAmount = total;
+      totalAmount = double.parse(total["Month Spend"]!);
       historyList = list;
       _isLoading = false;
     });
@@ -176,6 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
           TransactionModel.deleteTransaction(transactionModel);
           setState(() {
             historyList.removeAt(index);
+            if (transactionModel.type == TransactionType.debit.name) {
+              totalAmount -= double.parse(transactionModel.amount);
+            }
           });
         }
       },

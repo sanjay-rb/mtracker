@@ -35,7 +35,10 @@ class TransactionModel {
   static Future<List<TransactionModel>> getMonthTransaction() async {
     List<Map<String, String>>? rows =
         await GSheetService.monthTransactionSheet!.values.map.allRows();
-    if (rows![0]['id']!.contains("#N/A")) {
+    if (rows == null) {
+      return [];
+    }
+    if (rows[0]['id']!.contains("#N/A")) {
       return [];
     }
     return rows.map((e) => TransactionModel.fromMap(e)).toList();

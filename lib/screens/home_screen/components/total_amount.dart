@@ -8,7 +8,7 @@ class TotalAmountWidget extends StatelessWidget {
     super.key,
     required this.total,
   });
-  final Map<String, String> total;
+  final double total;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +33,14 @@ class TotalAmountWidget extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: formatCurrency(double.parse(total['Month Spend']!))
-                      .split('.')[0],
+                  text: formatCurrency(total).split('.')[0],
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 35,
                   ),
                 ),
                 TextSpan(
-                  text:
-                      ".${formatCurrency(double.parse(total['Month Spend']!)).split('.')[1]}",
+                  text: ".${formatCurrency(total).split('.')[1]}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 25,

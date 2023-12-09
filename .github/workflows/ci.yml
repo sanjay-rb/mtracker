@@ -1,8 +1,7 @@
 name: Perform CI
 on:
-  push:
-    branches: [dev]
   pull_request:
+    types: [opened]
     branches: [main]
 
 jobs:

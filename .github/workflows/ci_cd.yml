@@ -5,8 +5,7 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+
 jobs:
   continuous_integration:
     name: Continuous Integration
@@ -42,7 +41,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            CI Completed Successfully!!!
+            Continuous Integration Completed Successfully!!!
 
             User: ${{ github.actor }}
 
@@ -59,7 +58,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            CI Failed!!!
+            Continuous Integration Failed!!!
 
             User: ${{ github.actor }}
 
@@ -71,6 +70,7 @@ jobs:
 
   continuous_deployment:
     name: Continuous Deployment
+    needs: continuous_integration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -115,7 +115,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deployment Success: https://mtracker-394207.web.app/
+            Continuous Deployment Completed Successfully!!!
+
+            URL: https://mtracker-394207.web.app/
 
             User: ${{ github.actor }}
 
@@ -132,7 +134,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deployment Failed: https://mtracker-394207.web.app/
+            Continuous Deployment Failed!!!
+
+            URL: https://mtracker-394207.web.app/
 
             User: ${{ github.actor }}
 

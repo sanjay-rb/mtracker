@@ -5,6 +5,8 @@ name: Perform CI on Dev Branch
 on:
   push:
     branches: [dev]
+  pull_request:
+    branches: [main]
 
 jobs:
   continuous_integration:
@@ -41,7 +43,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            CI Completed Successfully!!!
+            Continuous Integration Completed Successfully!!!
 
             User: ${{ github.actor }}
 
@@ -58,7 +60,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            CI Failed!!!
+            Continuous Integration Failed!!!
 
             User: ${{ github.actor }}
 

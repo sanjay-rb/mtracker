@@ -45,7 +45,7 @@ jobs:
 
             Repository: ${{ github.repository }}
 
-            See changes: ${{ github.event.pull_request.url }}
+            See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
 
       - name: Send Failure Telegram Message
         if: failure()
@@ -60,4 +60,4 @@ jobs:
 
             Repository: ${{ github.repository }}
 
-            See changes: ${{ github.event.pull_request.url }}
+            See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}

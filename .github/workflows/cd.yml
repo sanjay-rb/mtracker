@@ -56,8 +56,6 @@ jobs:
 
             User: ${{ github.actor }}
 
-            Commit message: ${{ github.event.commits.message }}
-
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
@@ -74,8 +72,6 @@ jobs:
             URL: https://mtracker-394207.web.app/
 
             User: ${{ github.actor }}
-
-            Commit message: ${{ github.event.commits.message }}
 
             Repository: ${{ github.repository }}
 

@@ -1,7 +1,6 @@
 name: Perform CI
 on:
   pull_request:
-    types: [opened]
     branches: [main]
 
 jobs:
@@ -43,11 +42,9 @@ jobs:
 
             User: ${{ github.actor }}
 
-            Commit message: ${{ github.event.commits.message }}
-
             Repository: ${{ github.repository }}
 
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
 
       - name: Send Failure Telegram Message
         if: failure()
@@ -60,8 +57,6 @@ jobs:
 
             User: ${{ github.actor }}
 
-            Commit message: ${{ github.event.commits.message }}
-
             Repository: ${{ github.repository }}
 
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}

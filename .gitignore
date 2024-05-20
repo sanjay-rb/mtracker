@@ -51,3 +51,6 @@ app.*.map.json
 .vscode
 .firebase
 /.fvm/flutter_sdk
+
+# FVM Version Cache
+.fvm/

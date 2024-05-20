@@ -1,3 +1,6 @@
+# My .gitignore
+assets/assets/key.json
+
 # Miscellaneous
 *.class
 *.log
@@ -48,3 +51,6 @@ app.*.map.json
 .vscode
 .firebase
 /.fvm/flutter_sdk
+
+# FVM Version Cache
+.fvm/

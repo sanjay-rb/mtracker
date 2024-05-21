@@ -4,8 +4,8 @@ on:
     branches: [main]
 
 jobs:
-  continuous_deployment:
-    name: Continuous Deployment
+  continuous_deployment_web:
+    name: Continuous Deployment WEB
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -50,7 +50,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Continuous Deployment Completed Successfully!!!
+            WEB Continuous Deployment Completed Successfully!!!
 
             URL: https://mtracker-394207.web.app/
 
@@ -67,7 +67,88 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Continuous Deployment Failed!!!
+            WEB Continuous Deployment Failed!!!
+
+            URL: https://mtracker-394207.web.app/
+
+            User: ${{ github.actor }}
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+  
+  continuous_deployment_ios:
+    name: Continuous Deployment IOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Creating Gsheet Key File
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "key.json"
+          json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GSHEET }}
+          dir: "assets/"
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "3.7.2"
+          channel: "stable"
+
+      - name: Get Flutter Dependancy
+        run: flutter pub get
+
+      - name: POD Updated
+        run: pod repo update
+        working-directory: ios
+
+      - name: Build IOS App
+        run: flutter build ios --release --no-codesign
+      
+      - name: Generating IPA File
+        run: mkdir Payload; mv Runner.app/ Payload; zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/iphoneos
+      
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/ios/iphoneos/FlutterIpaExport.ipa
+          tag: v1.0
+          overwrite: true
+
+      - name: Send Success Telegram Message
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            IOS Continuous Deployment Completed Successfully!!!
+
+            URL: https://mtracker-394207.web.app/
+
+            User: ${{ github.actor }}
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+      - name: Send Failure Telegram Message
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            IOS Continuous Deployment Failed!!!
 
             URL: https://mtracker-394207.web.app/
 

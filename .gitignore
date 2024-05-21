@@ -1,6 +1,3 @@
-# My .gitignore
-assets/assets/key.json
-
 # Miscellaneous
 *.class
 *.log

@@ -76,7 +76,7 @@ jobs:
         working-directory: ios
 
       - name: Build IOS App
-        run: flutter build ios --release
+        run: flutter build ios --release --no-codesign
       
       - name: Generating IPA File
         run: mkdir Payload; mv Runner.app/ Payload; zip -qq -r -9 Payload.ipa Payload

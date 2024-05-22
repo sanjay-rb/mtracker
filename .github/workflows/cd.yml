@@ -90,38 +90,61 @@ jobs:
           tag: v1.0
           overwrite: true
 
-  notification:
-    needs: [continuous_deployment_web, continuous_deployment_ios]
+  web_notification_success:
+    if: success()
+    needs: [continuous_deployment_web]
     runs-on: ubuntu-latest
     steps:
       - name: Send Success Telegram Message
-        if: success()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Continuous Deployment Completed Successfully!!!
+            Web Continuous Deployment Completed Successfully!!!
 
             Web Release : https://mtracker-394207.web.app/
-            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
 
             User: ${{ github.actor }}
 
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-
+  
+  web_notification_failure:
+    if: failure()
+    needs: [continuous_deployment_web]
+    runs-on: ubuntu-latest
+    steps:
       - name: Send Failure Telegram Message
-        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Continuous Deployment Failed!!!
+            Web Continuous Deployment Failed!!!
 
             Web Release : https://mtracker-394207.web.app/
+
+            User: ${{ github.actor }}
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+  
+  ios_notification_success:
+    if: success()
+    needs: [continuous_deployment_ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Success Telegram Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            iOS Continuous Deployment Completed Successfully!!!
+
             iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
 
             User: ${{ github.actor }}
@@ -129,3 +152,25 @@ jobs:
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+  
+  ios_notification_failure:
+    if: failure()
+    needs: [continuous_deployment_ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Failure Telegram Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            iOS Continuous Deployment Failed!!!
+
+            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
+
+            User: ${{ github.actor }}
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}    
+

@@ -76,7 +76,7 @@ jobs:
         working-directory: ios
 
       - name: Build IOS App
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release
       
       - name: Generating IPA File
         run: mkdir Payload; mv Runner.app/ Payload; zip -qq -r -9 Payload.ipa Payload
@@ -103,7 +103,8 @@ jobs:
           message: |
             Continuous Deployment Completed Successfully!!!
 
-            URL: https://mtracker-394207.web.app/
+            Web Release : https://mtracker-394207.web.app/
+            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
 
             User: ${{ github.actor }}
 
@@ -120,7 +121,8 @@ jobs:
           message: |
             Continuous Deployment Failed!!!
 
-            URL: https://mtracker-394207.web.app/
+            Web Release : https://mtracker-394207.web.app/
+            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
 
             User: ${{ github.actor }}
 

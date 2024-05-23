@@ -103,14 +103,20 @@ jobs:
           message: |
             Web Continuous Deployment Completed Successfully!!!
 
-            Web Release : [MTracker](https://mtracker-394207.web.app/)
-
             User: ${{ github.actor }}
 
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-  
+      
+      - name: Send Release Telegram Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            https://mtracker-394207.web.app/
+
   web_notification_failure:
     if: failure()
     needs: [continuous_deployment_web]
@@ -143,14 +149,20 @@ jobs:
           message: |
             iOS Continuous Deployment Completed Successfully!!!
 
-            iOS Release : [MTracker](itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/Saleh7/ipa-install/master/testapp.plist)
-
             User: ${{ github.actor }}
 
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-  
+      
+      - name: Send Release Telegram Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/sanjay-rb/mtracker/main/ios_install.plist
+      
   ios_notification_failure:
     if: failure()
     needs: [continuous_deployment_ios]

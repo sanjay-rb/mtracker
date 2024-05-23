@@ -103,7 +103,7 @@ jobs:
           message: |
             Web Continuous Deployment Completed Successfully!!!
 
-            Web Release : https://mtracker-394207.web.app/
+            Web Release : [MTracker](https://mtracker-394207.web.app/)
 
             User: ${{ github.actor }}
 
@@ -124,8 +124,6 @@ jobs:
           message: |
             Web Continuous Deployment Failed!!!
 
-            Web Release : https://mtracker-394207.web.app/
-
             User: ${{ github.actor }}
 
             Repository: ${{ github.repository }}
@@ -145,7 +143,7 @@ jobs:
           message: |
             iOS Continuous Deployment Completed Successfully!!!
 
-            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
+            iOS Release : [MTracker](itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/Saleh7/ipa-install/master/testapp.plist)
 
             User: ${{ github.actor }}
 
@@ -165,8 +163,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             iOS Continuous Deployment Failed!!!
-
-            iOS Release : https://github.com/sanjay-rb/mtracker/releases/tag/v1.0
 
             User: ${{ github.actor }}
 

@@ -6,7 +6,7 @@ on:
 jobs:
   continuous_integration:
     name: Continuous Integration
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -31,8 +31,23 @@ jobs:
       - name: Analyze Code
         run: dart analyze .
 
+      - name: POD Updated
+        run: pod repo update
+        working-directory: ios
+      
+      - name: Testing Build Web App
+        run: flutter build web --release
+      
+      - name: Testing Build iOS App
+        run: flutter build ios --release --no-codesign
+
+      
+  notification_success:
+    if: success()
+    needs: [continuous_integration]
+    runs-on: ubuntu-latest
+    steps:
       - name: Send Success Telegram Message
-        if: success()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -46,8 +61,12 @@ jobs:
 
             See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
 
+  notification_failure:
+    if: failure()
+    needs: [continuous_integration]
+    runs-on: ubuntu-latest
+    steps:
       - name: Send Failure Telegram Message
-        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -60,3 +79,4 @@ jobs:
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+  

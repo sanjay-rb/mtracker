@@ -3,7 +3,6 @@ import 'package:mtracker/constants/bottom_sheet_widget.dart';
 import 'package:mtracker/constants/constant.dart';
 import 'package:mtracker/constants/loader_widget.dart';
 import 'package:mtracker/models/account_model.dart';
-import 'package:mtracker/models/catagory_model.dart';
 import 'package:mtracker/models/transaction_model.dart';
 import 'package:mtracker/routes/route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -159,70 +158,76 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                       children: [
                         Expanded(
                           child: TextButton(
-                            onPressed: type == TransactionType.credit
-                                ? null
-                                : () {
-                                    AccountModel.getAllAccount()
-                                        .then((accountList) {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return BottomSheetWidget(
-                                            title: "Accounts",
-                                            listData: accountList
-                                                .map((e) => e.account)
-                                                .toList(),
-                                            dbLink: AccountModel.dbLink,
-                                          );
-                                        },
-                                      ).then((selected) async {
-                                        if (selected == "new") {
-                                          await launchUrlString(
-                                            AccountModel.dbLink,
-                                          );
-                                        } else {
-                                          setState(() {
-                                            fromAccount = selected;
-                                          });
-                                        }
-                                      });
-                                    });
+                            onPressed: () {
+                              AccountModel.getAllAccount().then((accountList) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BottomSheetWidget(
+                                      title: "Accounts",
+                                      listData: accountList
+                                          .map((e) => e.account)
+                                          .toList(),
+                                      dbLink: AccountModel.dbLink,
+                                    );
                                   },
+                                ).then((selected) async {
+                                  if (selected == "new") {
+                                    await launchUrlString(
+                                      AccountModel.dbLink,
+                                    );
+                                  } else {
+                                    setState(() {
+                                      fromAccount = selected;
+                                      if (type == TransactionType.transfer) {
+                                        category = "🔂.Transfer";
+                                      } else if (type ==
+                                          TransactionType.credit) {
+                                        category = selected;
+                                      }
+                                    });
+                                  }
+                                });
+                              });
+                            },
                             child: Text(fromAccount),
                           ),
                         ),
                         const Text("to"),
                         Expanded(
                           child: TextButton(
-                            onPressed: type == TransactionType.debit
-                                ? null
-                                : () {
-                                    AccountModel.getAllAccount()
-                                        .then((accountList) {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return BottomSheetWidget(
-                                            title: "Accounts",
-                                            listData: accountList
-                                                .map((e) => e.account)
-                                                .toList(),
-                                            dbLink: AccountModel.dbLink,
-                                          );
-                                        },
-                                      ).then((selected) async {
-                                        if (selected == "new") {
-                                          await launchUrlString(
-                                            AccountModel.dbLink,
-                                          );
-                                        } else {
-                                          setState(() {
-                                            toAccount = selected;
-                                          });
-                                        }
-                                      });
-                                    });
+                            onPressed: () {
+                              AccountModel.getAllAccount().then((accountList) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BottomSheetWidget(
+                                      title: "Accounts",
+                                      listData: accountList
+                                          .map((e) => e.account)
+                                          .toList(),
+                                      dbLink: AccountModel.dbLink,
+                                    );
                                   },
+                                ).then((selected) async {
+                                  if (selected == "new") {
+                                    await launchUrlString(
+                                      AccountModel.dbLink,
+                                    );
+                                  } else {
+                                    setState(() {
+                                      toAccount = selected;
+                                      if (type == TransactionType.transfer) {
+                                        category = "🔂.Transfer";
+                                      } else if (type ==
+                                          TransactionType.debit) {
+                                        category = selected;
+                                      }
+                                    });
+                                  }
+                                });
+                              });
+                            },
                             child: Text(toAccount),
                           ),
                         ),
@@ -231,39 +236,39 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        TextButton(
-                          onPressed: type == TransactionType.transfer
-                              ? null
-                              : () {
-                                  CategoryModel.getAllCategory()
-                                      .then((categoryList) {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return BottomSheetWidget(
-                                          title: "Categories",
-                                          listData: categoryList
-                                              .map((e) => e.category)
-                                              .toList(),
-                                          dbLink: CategoryModel.dbLink,
-                                        );
-                                      },
-                                    ).then((selected) async {
-                                      if (selected == "new") {
-                                        await launchUrlString(
-                                          AccountModel.dbLink,
-                                        );
-                                      } else {
-                                        setState(() {
-                                          category = selected;
-                                        });
-                                      }
-                                    });
-                                  });
-                                },
-                          child: Text(category),
-                        ),
-                        const Text("-"),
+                        // TextButton(
+                        //   onPressed: type == TransactionType.transfer
+                        //       ? null
+                        //       : () {
+                        //           CategoryModel.getAllCategory()
+                        //               .then((categoryList) {
+                        //             showModalBottomSheet(
+                        //               context: context,
+                        //               builder: (BuildContext context) {
+                        //                 return BottomSheetWidget(
+                        //                   title: "Categories",
+                        //                   listData: categoryList
+                        //                       .map((e) => e.category)
+                        //                       .toList(),
+                        //                   dbLink: CategoryModel.dbLink,
+                        //                 );
+                        //               },
+                        //             ).then((selected) async {
+                        //               if (selected == "new") {
+                        //                 await launchUrlString(
+                        //                   AccountModel.dbLink,
+                        //                 );
+                        //               } else {
+                        //                 setState(() {
+                        //                   category = selected;
+                        //                 });
+                        //               }
+                        //             });
+                        //           });
+                        //         },
+                        //   child: Text(category),
+                        // ),
+                        // const Text("-"),
                         Expanded(
                           child: Padding(
                             padding:

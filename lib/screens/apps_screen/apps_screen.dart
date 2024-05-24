@@ -10,7 +10,8 @@ class AppsScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            await http.get(Uri.parse("itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/sanjay-rb/mtracker/main/ios_install.plist"));
+            await http.get(Uri.parse(
+                "itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/sanjay-rb/mtracker/main/ios_install.plist"));
           },
           child: const Text("Install iOS App"),
         ),

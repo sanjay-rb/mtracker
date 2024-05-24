@@ -74,10 +74,6 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Amount",
-                            style: TextStyle(color: Colors.grey),
-                          ),
                           const SizedBox(height: 10),
                           TextFormField(
                             autofocus: true,
@@ -287,7 +283,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                 hintStyle: TextStyle(fontSize: 15),
                                 border: InputBorder.none,
                               ),
-                              cursorColor: Colors.transparent,
+                              cursorColor: Theme.of(context).primaryColor,
                               style: const TextStyle(fontSize: 15),
                             ),
                           ),

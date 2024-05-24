@@ -63,9 +63,9 @@ class BottomSheetWidget extends StatelessWidget {
                     onTap: () async {
                       Navigator.pop(context, 'new');
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.all(2.0),
                           child: Text(

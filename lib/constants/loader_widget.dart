@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mtracker/constants/assets.dart';
 
-class LoaderWidget extends StatefulWidget {
+class LoaderWidget extends StatelessWidget {
   const LoaderWidget({super.key});
 
   @override
-  State<LoaderWidget> createState() => _LoaderWidgetState();
+  Widget build(BuildContext context) {
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+          MediaQuery.of(context).size.width * 0.2,
+        ),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.width * 0.2,
+          child: Image.asset(
+            Assets.assetsImagesRefreshLoader,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _LoaderWidgetState extends State<LoaderWidget>
+class LoaderWidgetTest extends StatefulWidget {
+  const LoaderWidgetTest({super.key});
+
+  @override
+  State<LoaderWidgetTest> createState() => _LoaderWidgetState();
+}
+
+class _LoaderWidgetState extends State<LoaderWidgetTest>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<int> _animation;

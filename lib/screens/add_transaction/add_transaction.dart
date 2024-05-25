@@ -26,6 +26,36 @@ class _AddTransactionState extends State<AddTransaction> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  onPressSave() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      DateTime dt = DateTime.now();
+      TransactionModel transactionModel = TransactionModel(
+        id: 'ID${dt.microsecondsSinceEpoch}',
+        category: category,
+        note: _noteController.text,
+        amount: _amountController.text,
+        dateTime: formatDateTime(dt),
+        fromAccount: fromAccount,
+        toAccount: toAccount,
+        type: type.name,
+      );
+      TransactionModel.addTransaction(transactionModel).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+        if (value) {
+          Navigator.pushReplacementNamed(
+            context,
+            MTrackerRoutes.home,
+          );
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,12 +115,14 @@ class _AddTransactionState extends State<AddTransaction> {
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
                             ),
+                            showCursor: false,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter a amount';
                               }
                               return null;
                             },
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               prefixText: '₹ ',
                               prefixStyle: const TextStyle(
@@ -289,40 +321,15 @@ class _AddTransactionState extends State<AddTransaction> {
                               ),
                               cursorColor: Theme.of(context).primaryColor,
                               style: const TextStyle(fontSize: 15),
+                              onEditingComplete: () {
+                                onPressSave();
+                              },
                             ),
                           ),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              DateTime dt = DateTime.now();
-                              TransactionModel transactionModel =
-                                  TransactionModel(
-                                id: 'ID${dt.microsecondsSinceEpoch}',
-                                category: category,
-                                note: _noteController.text,
-                                amount: _amountController.text,
-                                dateTime: formatDateTime(dt),
-                                fromAccount: fromAccount,
-                                toAccount: toAccount,
-                                type: type.name,
-                              );
-                              TransactionModel.addTransaction(transactionModel)
-                                  .then((value) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                if (value) {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    MTrackerRoutes.home,
-                                  );
-                                }
-                              });
-                            }
+                            onPressSave();
                           },
                           child: const Text("Save"),
                         )

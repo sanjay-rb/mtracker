@@ -24,6 +24,36 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
   final TextEditingController _noteController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  onPressSave() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      TransactionModel transactionModel = widget.transaction.copyWith(
+        id: widget.transaction.id,
+        category: category,
+        note: _noteController.text,
+        amount: _amountController.text,
+        dateTime: formatStringDateTime(
+          widget.transaction.dateTime,
+        ),
+        fromAccount: fromAccount,
+        toAccount: toAccount,
+        type: type.name,
+      );
+      TransactionModel.updateTransaction(transactionModel).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+        if (value) {
+          Navigator.pushReplacementNamed(
+            context,
+            MTrackerRoutes.home,
+          );
+        }
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -285,42 +315,15 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                               ),
                               cursorColor: Theme.of(context).primaryColor,
                               style: const TextStyle(fontSize: 15),
+                              onEditingComplete: () {
+                                onPressSave();
+                              },
                             ),
                           ),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              TransactionModel transactionModel =
-                                  widget.transaction.copyWith(
-                                id: widget.transaction.id,
-                                category: category,
-                                note: _noteController.text,
-                                amount: _amountController.text,
-                                dateTime: formatStringDateTime(
-                                  widget.transaction.dateTime,
-                                ),
-                                fromAccount: fromAccount,
-                                toAccount: toAccount,
-                                type: type.name,
-                              );
-                              TransactionModel.updateTransaction(
-                                      transactionModel)
-                                  .then((value) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                if (value) {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    MTrackerRoutes.home,
-                                  );
-                                }
-                              });
-                            }
+                            onPressSave();
                           },
                           child: const Text("Save"),
                         )

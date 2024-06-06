@@ -24,6 +24,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
   final TextEditingController _noteController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  DateTime currentDate = DateTime.now();
   onPressSave() {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -34,9 +35,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
         category: category,
         note: _noteController.text,
         amount: _amountController.text,
-        dateTime: formatStringDateTime(
-          widget.transaction.dateTime,
-        ),
+        dateTime: formatDateTime(currentDate),
         fromAccount: fromAccount,
         toAccount: toAccount,
         type: type.name,
@@ -70,6 +69,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
       toAccount = widget.transaction.toAccount;
       _amountController.text = widget.transaction.amount;
       _noteController.text = widget.transaction.note;
+      currentDate = formatDBDateTime(widget.transaction.dateTime);
     });
   }
 
@@ -178,6 +178,31 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                             ),
                           )
                           .toList(),
+                    ),
+                    const SizedBox(height: 10),
+                    InkWell(
+                      onTap: () async {
+                        DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: currentDate,
+                          firstDate:
+                              currentDate.subtract(const Duration(days: 365)),
+                          lastDate: currentDate.add(const Duration(days: 356)),
+                        );
+                        if (date != null) {
+                          setState(() {
+                            currentDate = date;
+                          });
+                        }
+                      },
+                      child: Text(
+                        formatDateTimeInWords(currentDate),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Row(

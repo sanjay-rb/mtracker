@@ -14,13 +14,17 @@ String formatDateTime(DateTime when) {
   return DateFormat("MM/dd/yyyy").format(when);
 }
 
-String formatStringDateTime(String when) {
+DateTime formatDBDateTime(String when) {
   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
     ((double.parse(when) - 25569) * 86400000).toInt(),
     isUtc: true,
   );
 
-  return DateFormat("MM/dd/yyyy").format(dateTime);
+  return dateTime;
+}
+
+String formatDateTimeInWords(DateTime when) {
+  return DateFormat.yMMMMd().format(when);
 }
 
 String formatCurrency(double value) {

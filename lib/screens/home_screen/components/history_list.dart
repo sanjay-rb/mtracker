@@ -74,18 +74,33 @@ class HistoryList extends StatelessWidget {
                 flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
-                  child: Text(
-                    "₹ ${formatCurrency(double.parse(transactionModel.amount))}",
-                    style: TextStyle(
-                      color: transactionModel.type ==
-                              TransactionType.credit.name
-                          ? Colors.green
-                          : transactionModel.type == TransactionType.debit.name
-                              ? Colors.red
-                              : Colors.blue,
-                      fontSize: 12,
-                    ),
-                    textAlign: TextAlign.end,
+                  child: Column(
+                    children: [
+                      Text(
+                        "₹ ${formatCurrency(double.parse(transactionModel.amount))}",
+                        style: TextStyle(
+                          color: transactionModel.type ==
+                                  TransactionType.credit.name
+                              ? Colors.green
+                              : transactionModel.type ==
+                                      TransactionType.debit.name
+                                  ? Colors.red
+                                  : Colors.blue,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        formatDateTimeInWords(
+                          formatDBDateTime(transactionModel.dateTime),
+                        ),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

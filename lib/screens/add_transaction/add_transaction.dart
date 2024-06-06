@@ -25,19 +25,19 @@ class _AddTransactionState extends State<AddTransaction> {
   final TextEditingController _noteController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  DateTime currentDate = DateTime.now();
 
   onPressSave() {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
-      DateTime dt = DateTime.now();
       TransactionModel transactionModel = TransactionModel(
-        id: 'ID${dt.microsecondsSinceEpoch}',
+        id: 'ID${DateTime.now().microsecondsSinceEpoch}',
         category: category,
         note: _noteController.text,
         amount: _amountController.text,
-        dateTime: formatDateTime(dt),
+        dateTime: formatDateTime(currentDate),
         fromAccount: fromAccount,
         toAccount: toAccount,
         type: type.name,
@@ -184,6 +184,31 @@ class _AddTransactionState extends State<AddTransaction> {
                             ),
                           )
                           .toList(),
+                    ),
+                    const SizedBox(height: 10),
+                    InkWell(
+                      onTap: () async {
+                        DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: currentDate,
+                          firstDate:
+                              currentDate.subtract(const Duration(days: 365)),
+                          lastDate: currentDate.add(const Duration(days: 356)),
+                        );
+                        if (date != null) {
+                          setState(() {
+                            currentDate = date;
+                          });
+                        }
+                      },
+                      child: Text(
+                        formatDateTimeInWords(currentDate),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Row(

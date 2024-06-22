@@ -41,7 +41,10 @@ class TransactionModel {
     if (rows[0]['id']!.contains("#N/A")) {
       return [];
     }
-    return rows.map((e) => TransactionModel.fromMap(e)).toList();
+    List<TransactionModel> data =
+        rows.map((e) => TransactionModel.fromMap(e)).toList();
+    data.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    return data;
   }
 
   String id;

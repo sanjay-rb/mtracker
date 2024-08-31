@@ -24,7 +24,7 @@ class HomeView extends GetView<HomeController> {
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Card(
                     color: Theme.of(context).colorScheme.primary.withAlpha(0),
                     child: SizedBox(
@@ -215,7 +215,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       TextButton.icon(
                         onPressed: () {
-                          print("Filter");
+                          debugPrint("Filter");
                         },
                         icon: Icon(
                           Icons.filter_alt,
@@ -230,7 +230,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     decoration: const BoxDecoration(

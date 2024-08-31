@@ -19,22 +19,28 @@ class DatabaseService {
       version: 1,
       onCreate: (db, version) {
         String sql = '''
-          CREATE TABLE "bucket" (
-            "name" varchar,
+          CREATE TABLE "account" (
+            "name" varchar PRIMARY KEY,
             "emoji" varchar,
-            "balance" integer,
-            "label" varchar
+            "amount" integer
+          );
+
+          CREATE TABLE "category" (
+            "name" varchar PRIMARY KEY,
+            "emoji" varchar,
+            "default_rule" varchar,
+            "default_type" varchar
           );
 
           CREATE TABLE "record" (
-            "id" integer PRIMARY KEY,
+            "id" varchar UNIQUE NOT NULL,
             "amount" integer,
             "type" varchar,
             "rule" varchar,
             "dt" datetime,
             "notes" varchar,
-            "from_bucket" varchar,
-            "to_bucket" varchar
+            "from" integer,
+            "to" integer
           );
         ''';
         db.execute(sql);

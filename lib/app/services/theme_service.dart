@@ -6,13 +6,13 @@ class ThemeService {
 
   static Color dominantDark = const Color(0xff242424);
 
-  static Color secondaryLight = const Color(0xff84E296);
+  static Color secondaryLight = const Color(0xff53A2BE);
 
-  static Color secondaryDark = const Color(0xff1B742B);
+  static Color secondaryDark = const Color(0xff36778f);
 
-  static Color accentLight = const Color(0xffDC602E);
+  static Color accentLight = const Color(0xff0A2239);
 
-  static Color accentDark = const Color(0xffDE6C3F);
+  static Color accentDark = const Color(0xff15497a);
 
   static ThemeData getLightTheme(context) {
     ThemeData lightTheme = ThemeData(

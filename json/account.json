@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Primary Account",
+        "emoji": "🏦",
+        "balance": 0.00
+    },
+    {
+        "name": "Secondary Account",
+        "emoji": "🏦",
+        "balance": 0.00
+    },
+    {
+        "name": "Wallet",
+        "emoji": "👛",
+        "balance": 0.00
+    },
+    {
+        "name": "Primary Credit Card",
+        "emoji": "💳",
+        "balance": 0.00
+    },
+    {
+        "name": "Secondary Credit Card",
+        "emoji": "💳",
+        "balance": 0.00
+    }
+]

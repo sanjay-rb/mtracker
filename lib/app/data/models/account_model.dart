@@ -1,16 +1,15 @@
-class Bucket {
+class Account {
+  static const tableName = "account";
   String? name;
   String? emoji;
   double? balance;
-  String? label;
 
-  Bucket({this.name, this.emoji, this.balance, this.label});
+  Account({this.name, this.emoji, this.balance});
 
-  Bucket.fromJson(Map<String, dynamic> json) {
+  Account.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     emoji = json['emoji'];
     balance = json['balance'];
-    label = json['label'];
   }
 
   Map<String, dynamic> toJson() {
@@ -18,7 +17,6 @@ class Bucket {
     data['name'] = name;
     data['emoji'] = emoji;
     data['balance'] = balance;
-    data['label'] = label;
     return data;
   }
 }

@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Salary",
+        "emoji": "💵",
+        "default_rule_bucket": "NA",
+        "default_record_type": "Credit"
+    },
+    {
+        "name": "Food",
+        "emoji": "🍔",
+        "default_rule_bucket": "Wants",
+        "default_record_type": "Debit"
+    },
+    {
+        "name": "Grocery",
+        "emoji": "🛒",
+        "default_rule_bucket": "Needs",
+        "default_record_type": "Debit"
+    },
+    {
+        "name": "Gold",
+        "emoji": "💰",
+        "default_rule_bucket": "Saves",
+        "default_record_type": "Transfer"
+    },
+    {
+        "name": "Stocks",
+        "emoji": "📈",
+        "default_rule_bucket": "Saves",
+        "default_record_type": "Transfer"
+    }
+]

@@ -1,8 +1,11 @@
-import 'package:mtracker/app/data/models/bucket_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:mtracker/app/constants/assets_constant.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseService {
+class DatabaseService extends GetxService {
   static Database? _database;
 
   Future<Database> get database async {
@@ -14,79 +17,54 @@ class DatabaseService {
   setDatabase() async {
     String directory = await getDatabasesPath();
     String dbPath = join(directory, 'mtracker.bank');
+
+    debugPrint("DB PATH : ${dbPath.toString()}");
+
     Database database = await openDatabase(
       dbPath,
       version: 1,
-      onCreate: (db, version) {
-        String sql = '''
-          CREATE TABLE "account" (
-            "name" varchar PRIMARY KEY,
-            "emoji" varchar,
-            "amount" integer
-          );
+      onCreate: (db, version) async {
+        final accountDDL = await rootBundle.loadString(Assets.assetsSqlAccount);
+        db.execute(accountDDL);
+        db.rawInsert('''
+          INSERT INTO [account] ([name],[emoji],[balance])
+          VALUES
+          ('Primary Account','🏦',0),
+          ('Secondary Account','🏦',0),
+          ('Wallet','👛',0),
+          ('Primary Credit Card','💳',0),
+          ('Secondary Credit Card','💳',0);
+        ''');
 
-          CREATE TABLE "category" (
-            "name" varchar PRIMARY KEY,
-            "emoji" varchar,
-            "default_rule" varchar,
-            "default_type" varchar
-          );
+        final budgetBucketDDL =
+            await rootBundle.loadString(Assets.assetsSqlBudgetBucket);
+        db.execute(budgetBucketDDL);
 
-          CREATE TABLE "record" (
-            "id" varchar UNIQUE NOT NULL,
-            "amount" integer,
-            "type" varchar,
-            "rule" varchar,
-            "dt" datetime,
-            "notes" varchar,
-            "from" integer,
-            "to" integer
-          );
-        ''';
-        db.execute(sql);
-        List<Bucket> defaultBucket = [
-          Bucket(
-            name: "Primary Account",
-            emoji: "🏦",
-            balance: 0,
-            label: "account",
-          ),
-          Bucket(
-            name: "Secondary Account",
-            emoji: "🏦",
-            balance: 0,
-            label: "account",
-          ),
-          Bucket(
-            name: "Wallet",
-            emoji: "👝",
-            balance: 0,
-            label: "account",
-          ),
-          Bucket(
-            name: "Card",
-            emoji: "💳",
-            balance: 0,
-            label: "account",
-          ),
-          Bucket(
-            name: "Food",
-            emoji: "🍔",
-            balance: 0,
-            label: "wants",
-          ),
-          Bucket(
-            name: "Grocery",
-            emoji: "🛒",
-            balance: 0,
-            label: "needs",
-          ),
-        ];
-        for (Bucket element in defaultBucket) {
-          db.insert('bucket', element.toJson());
-        }
+        final categoryDDL =
+            await rootBundle.loadString(Assets.assetsSqlCategory);
+        db.execute(categoryDDL);
+
+        db.rawInsert('''
+          INSERT INTO [category] ([name],[emoji],[default_rule_bucket],[default_record_type])
+          VALUES
+          ('Salary','💵','NA','Credit'),
+          ('Food','🍔','Wants','Debit'),
+          ('Grocery','🛒','Needs','Debit'),
+          ('Gold','💰','Saves','Transfer'),
+          ('Stocks','📈','Saves','Transfer');
+        ''');
+
+        final recordDDL = await rootBundle.loadString(Assets.assetsSqlRecord);
+        db.execute(recordDDL);
       },
     );
     return database;
+  }
+
+  deleteDataBase() async {
+    String directory = await getDatabasesPath();
+    String dbPath = join(directory, 'mtracker.bank');
+    debugPrint("DB PATH : ${dbPath.toString()}");
+    databaseFactory.deleteDatabase(dbPath);
   }
 }

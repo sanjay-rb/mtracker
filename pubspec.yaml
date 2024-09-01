@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   flutter_native_splash: ^2.4.1
   get: ^4.6.6
-  get_storage: 2.1.1
   google_fonts: ^6.2.1
   path: ^1.9.0
   sqflite: ^2.3.3+1
@@ -31,4 +30,13 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/
+    - assets/sql/account.sql
+    - assets/sql/budget_bucket.sql
+    - assets/sql/category.sql
+    - assets/sql/record.sql
   uses-material-design: true
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/app/constants/
+  filename: assets_constant.dart

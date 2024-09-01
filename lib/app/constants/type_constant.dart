@@ -1,5 +1,5 @@
 class TypeConstant {
-  String credit = "Credit";
-  String debit = "Debit";
-  String transfer = "Transfer";
+  static String credit = "Credit";
+  static String debit = "Debit";
+  static String transfer = "Transfer";
 }

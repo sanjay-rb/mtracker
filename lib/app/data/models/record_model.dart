@@ -1,32 +1,32 @@
-class Transaction {
+class Record {
   String? id;
   int? amount;
   String? type;
   String? rule;
-  DateTime? date;
+  String? dateTime;
   String? note;
-  String? fromBucket;
-  String? toBucket;
+  String? account;
+  String? category;
 
-  Transaction(
+  Record(
       {this.id,
       this.amount,
       this.type,
       this.rule,
-      this.date,
+      this.dateTime,
       this.note,
-      this.fromBucket,
-      this.toBucket});
+      this.account,
+      this.category});
 
-  Transaction.fromJson(Map<String, dynamic> json) {
+  Record.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
     type = json['type'];
     rule = json['rule'];
-    date = json['date'];
+    dateTime = json['date_time'];
     note = json['note'];
-    fromBucket = json['from_bucket'];
-    toBucket = json['to_bucket'];
+    account = json['account'];
+    category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,10 +35,10 @@ class Transaction {
     data['amount'] = amount;
     data['type'] = type;
     data['rule'] = rule;
-    data['date'] = date;
+    data['date_time'] = dateTime;
     data['note'] = note;
-    data['from_bucket'] = fromBucket;
-    data['to_bucket'] = toBucket;
+    data['account'] = account;
+    data['category'] = category;
     return data;
   }
 }

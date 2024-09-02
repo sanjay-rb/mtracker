@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mtracker/app/constants/assets_constant.dart';
+import 'package:mtracker/app/constants/rule_constant.dart';
+import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -47,11 +49,11 @@ class DatabaseService extends GetxService {
         db.rawInsert('''
           INSERT INTO [category] ([name],[emoji],[default_rule_bucket],[default_record_type])
           VALUES
-          ('Salary','💵','NA','Credit'),
-          ('Food','🍔','Wants','Debit'),
-          ('Grocery','🛒','Needs','Debit'),
-          ('Gold','💰','Saves','Transfer'),
-          ('Stocks','📈','Saves','Transfer');
+          ('Salary','💵','${RuleConstant.na}','${TypeConstant.credit}'),
+          ('Food','🍔','${RuleConstant.wants}','${TypeConstant.debit}'),
+          ('Grocery','🛒','${RuleConstant.needs}','${TypeConstant.debit}'),
+          ('Gold','💰','${RuleConstant.saves}','${TypeConstant.transfer}'),
+          ('Stocks','📈','${RuleConstant.saves}','${TypeConstant.transfer}');
         ''');
 
         final recordDDL = await rootBundle.loadString(Assets.assetsSqlRecord);

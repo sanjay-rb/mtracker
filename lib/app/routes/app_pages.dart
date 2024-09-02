@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/category_form/bindings/category_form_binding.dart';
-import '../modules/category_form/views/category_form_view.dart';
+import '../modules/category/bindings/category_binding.dart';
+import '../modules/category/views/category_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -19,9 +19,9 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.CATEGORY_FORM,
-      page: () => const CategoryFormView(),
-      binding: CategoryFormBinding(),
+      name: _Paths.CATEGORY,
+      page: () => CategoryView(Get.arguments),
+      binding: CategoryBinding(),
     ),
   ];
 }

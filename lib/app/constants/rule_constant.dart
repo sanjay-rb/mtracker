@@ -1,5 +1,7 @@
 class RuleConstant {
-  String needs_50 = "Needs (50%)";
-  String wants_30 = "Wants (30%)";
-  String savings_20 = "Savings (20%)";
+  static String needs = "NEEDS";
+  static String wants = "WANTS";
+  static String saves = "SAVES";
+  static String na = "NA";
+  static List<String> values = [needs, wants, saves, na];
 }

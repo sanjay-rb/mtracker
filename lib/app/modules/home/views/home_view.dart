@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
-import 'package:mtracker/app/data/providers/account_provider.dart';
-import 'package:mtracker/app/data/providers/category_provider.dart';
 import 'package:mtracker/app/routes/app_pages.dart';
 import 'package:mtracker/app/services/database_service.dart';
 
@@ -475,33 +473,22 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      FutureBuilder<List<Account>>(
-                        future: AccountProvider.getAllAccount(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          List<Account> accountList = [];
-                          if (snapshot.data != null) {
-                            accountList = snapshot.data!;
-                          }
-
-                          return Column(
-                            children: List.generate(
-                              accountList.length,
-                              (index) => InkWell(
+                      Obx(
+                        () => Column(
+                          children: List.generate(
+                            controller.accounts.length,
+                            (index) {
+                              Account account = controller.accounts[index];
+                              return InkWell(
                                 onTap: () {
-                                  debugPrint(accountList[index].name);
+                                  debugPrint(account.name);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
                                       Text(
-                                        accountList[index].emoji.toString(),
+                                        account.emoji.toString(),
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -509,7 +496,7 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                       const SizedBox(width: 10),
                                       Text(
-                                        accountList[index].name.toString(),
+                                        account.name.toString(),
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -517,7 +504,7 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                       const Spacer(),
                                       Text(
-                                        "₹ ${accountList[index].balance}",
+                                        "₹ ${account.balance}",
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -526,10 +513,10 @@ class HomeView extends GetView<HomeController> {
                                     ],
                                   ),
                                 ),
-                              ),
-                            ),
-                          );
-                        },
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -556,7 +543,9 @@ class HomeView extends GetView<HomeController> {
                           ),
                           const Spacer(),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(Routes.CATEGORY, arguments: null);
+                            },
                             style: ButtonStyle(
                               backgroundColor: WidgetStatePropertyAll(
                                 Theme.of(context).colorScheme.tertiary,
@@ -583,31 +572,25 @@ class HomeView extends GetView<HomeController> {
                       ),
                       const SizedBox(height: 10),
                       Center(
-                        child: FutureBuilder<List<Category>>(
-                          future: CategoryProvider.getAllACategory(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            List<Category> categoryList = snapshot.data!;
-
-                            return Wrap(
-                              runAlignment: WrapAlignment.center,
-                              alignment: WrapAlignment.center,
-                              runSpacing: 10,
-                              spacing: 10,
-                              children: List.generate(
-                                categoryList.length,
-                                (index) => InkWell(
-                                  onTap: () {
-                                    debugPrint(categoryList[index].name);
-                                    Get.toNamed(
-                                      Routes.CATEGORY_FORM,
-                                      arguments: categoryList[index],
+                        child: Obx(
+                          () => Wrap(
+                            runAlignment: WrapAlignment.center,
+                            alignment: WrapAlignment.center,
+                            runSpacing: 10,
+                            spacing: 10,
+                            children: List.generate(
+                              controller.categories.length,
+                              (index) {
+                                Category category =
+                                    controller.categories[index];
+                                return InkWell(
+                                  onTap: () async {
+                                    debugPrint(category.name);
+                                    await Get.toNamed(
+                                      Routes.CATEGORY,
+                                      arguments: category,
                                     );
+                                    controller.updateCategories();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -618,7 +601,7 @@ class HomeView extends GetView<HomeController> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          categoryList[index].emoji.toString(),
+                                          category.emoji.toString(),
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context)
                                               .textTheme
@@ -628,26 +611,21 @@ class HomeView extends GetView<HomeController> {
                                         RichText(
                                           text: TextSpan(
                                             children: [
-                                              categoryList[index]
-                                                          .defaultRecordType ==
+                                              category.defaultRecordType ==
                                                       TypeConstant.credit
                                                   ? const TextSpan(text: "🟢")
                                                   : const TextSpan(),
-                                              categoryList[index]
-                                                          .defaultRecordType ==
+                                              category.defaultRecordType ==
                                                       TypeConstant.debit
                                                   ? const TextSpan(text: "🔴")
                                                   : const TextSpan(),
-                                              categoryList[index]
-                                                          .defaultRecordType ==
+                                              category.defaultRecordType ==
                                                       TypeConstant.transfer
                                                   ? const TextSpan(text: "🔵")
                                                   : const TextSpan(),
                                               const TextSpan(text: " "),
                                               TextSpan(
-                                                text: categoryList[index]
-                                                    .name
-                                                    .toString(),
+                                                text: category.name.toString(),
                                               ),
                                             ],
                                             style: Theme.of(context)
@@ -658,12 +636,12 @@ class HomeView extends GetView<HomeController> {
                                       ],
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

@@ -1,5 +1,7 @@
 class TypeConstant {
-  static String credit = "Credit";
-  static String debit = "Debit";
-  static String transfer = "Transfer";
+  static String credit = "CREDIT";
+  static String debit = "DEBIT";
+  static String transfer = "TRANSFER";
+
+  static List<String> values = [credit, debit, transfer];
 }

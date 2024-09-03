@@ -1,4 +1,5 @@
 CREATE TABLE [account] (
+  [id] TEXT,
   [name] TEXT,
   [emoji] TEXT,
   [balance] REAL

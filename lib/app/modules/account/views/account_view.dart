@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
-import 'package:mtracker/app/data/models/category_model.dart';
-import 'package:mtracker/app/data/providers/category_provider.dart';
+import 'package:mtracker/app/data/models/account_model.dart';
+import 'package:mtracker/app/data/providers/account_provider.dart';
 
-import '../controllers/category_controller.dart';
+import '../controllers/account_controller.dart';
 
-class CategoryView extends GetView<CategoryController> {
-  final Category? category;
-  const CategoryView(this.category, {super.key});
+class AccountView extends GetView<AccountController> {
+  final Account? account;
+  const AccountView(this.account, {super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +19,9 @@ class CategoryView extends GetView<CategoryController> {
           child: ListView(
             children: [
               Text(
-                category == null
-                    ? "➕ ADD CATEGORY"
-                    : "${category!.emoji} ${category!.name!.toUpperCase()}",
+                account == null
+                    ? "➕ ADD ACCOUNT"
+                    : "${account!.emoji} ${account!.name!.toUpperCase()}",
                 style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onPrimary,
@@ -44,8 +42,7 @@ class CategoryView extends GetView<CategoryController> {
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText:
-                              category == null ? 'Emoji' : category!.emoji,
+                          hintText: account == null ? 'Emoji' : account!.emoji,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(
@@ -75,7 +72,7 @@ class CategoryView extends GetView<CategoryController> {
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText: category == null ? 'Name' : category!.name,
+                          hintText: account == null ? 'Name' : account!.name,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(
@@ -97,94 +94,48 @@ class CategoryView extends GetView<CategoryController> {
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
-                children: TypeConstant.values
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => MaterialButton(
-                              onPressed: () {
-                                controller.updateType(element);
-                              },
-                              color: controller.type.value == element
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).colorScheme.secondary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: FittedBox(
-                                  child: Text(
-                                    element,
-                                    style: TextStyle(
-                                      color: controller.type.value == element
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: controller.balanceController,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                    signed: true,
+                  ),
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: account == null
+                        ? 'Balance'
+                        : account!.balance.toString(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: RuleConstant.values
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => MaterialButton(
-                              onPressed: () {
-                                controller.updateRule(element);
-                              },
-                              color: controller.rule.value == element
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).colorScheme.secondary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: FittedBox(
-                                  child: Text(
-                                    element,
-                                    style: TextStyle(
-                                      color: controller.rule.value == element
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
-                    )
-                    .toList(),
+                    ),
+                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.start,
+                ),
               ),
               const SizedBox(height: 20),
               Row(
                 children: [
-                  if (category != null)
+                  if (account != null)
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: MaterialButton(
                           onPressed: () async {
                             if (controller.validateForm()) {
-                              await CategoryProvider.deleteCategory(category!);
+                              await AccountProvider.deleteAccount(account!);
                               Get.back();
                             }
                           },
@@ -204,27 +155,27 @@ class CategoryView extends GetView<CategoryController> {
                       child: MaterialButton(
                         onPressed: () async {
                           if (controller.validateForm()) {
-                            if (category != null) {
-                              category!.emoji = controller.emojiController.text;
-                              category!.name = controller.nameController.text;
-                              category!.defaultRecordType =
-                                  controller.type.value;
-                              category!.defaultRuleBucket =
-                                  controller.rule.value;
-                              await CategoryProvider.updateCategory(category!);
+                            if (account != null) {
+                              account!.name = controller.nameController.text;
+                              account!.emoji = controller.emojiController.text;
+                              account!.balance = double.parse(
+                                  controller.balanceController.text);
+
+                              await AccountProvider.updateAccount(account!);
                             } else {
-                              Category newCategoryObj = Category();
-                              newCategoryObj = Category(
-                                id: "C${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}",
+                              Account newAccountObj = Account();
+
+                              newAccountObj = Account(
+                                id: "A${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}",
                                 name: controller.nameController.text,
                                 emoji: controller.emojiController.text,
-                                defaultRecordType: controller.type.value,
-                                defaultRuleBucket: controller.rule.value,
+                                balance: double.parse(
+                                    controller.balanceController.text),
                               );
-                              await CategoryProvider.createCategory(
-                                  newCategoryObj);
-                            }
 
+                              await AccountProvider.createAccount(
+                                  newAccountObj);
+                            }
                             Get.back();
                           }
                         },

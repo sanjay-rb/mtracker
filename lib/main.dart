@@ -12,7 +12,7 @@ Future<void> main() async {
 }
 
 initServices() async {
-  debugPrint('starting services ...');
+  debugPrint('Starting services...');
   await Get.putAsync(() async => DatabaseService());
   debugPrint('All services started...');
 }

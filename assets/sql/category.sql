@@ -1,4 +1,5 @@
 CREATE TABLE [category] (
+  [id] TEXT,
   [name] TEXT,
   [emoji] TEXT,
   [default_rule_bucket] TEXT,

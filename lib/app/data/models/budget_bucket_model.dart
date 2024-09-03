@@ -1,4 +1,6 @@
 class BudgetBucket {
+  static const tableName = "budget_bucket";
+  String? id;
   String? yearMonth;
   double? totalCredit;
   double? needs;
@@ -7,7 +9,8 @@ class BudgetBucket {
   double? totalDebit;
 
   BudgetBucket(
-      {this.yearMonth,
+      {this.id,
+      this.yearMonth,
       this.totalCredit,
       this.needs,
       this.wants,
@@ -15,6 +18,7 @@ class BudgetBucket {
       this.totalDebit});
 
   BudgetBucket.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     yearMonth = json['year_month'];
     totalCredit = json['total_credit'];
     needs = json['needs'];
@@ -25,6 +29,7 @@ class BudgetBucket {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['id'] = id;
     data['year_month'] = yearMonth;
     data['total_credit'] = totalCredit;
     data['needs'] = needs;

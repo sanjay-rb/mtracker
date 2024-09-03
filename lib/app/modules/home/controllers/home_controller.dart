@@ -14,7 +14,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     updateCategories();
-    updateAccount();
+    updateAccounts();
     super.onInit();
   }
 
@@ -25,10 +25,10 @@ class HomeController extends GetxController {
   }
 
   Future<void> updateCategories() async {
-    categories.value = await CategoryProvider.getAllACategory();
+    categories.value = await CategoryProvider.readAllACategory();
   }
 
-  Future<void> updateAccount() async {
-    accounts.value = await AccountProvider.getAllAccount();
+  Future<void> updateAccounts() async {
+    accounts.value = await AccountProvider.readAllAccount();
   }
 }

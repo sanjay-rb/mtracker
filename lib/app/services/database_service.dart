@@ -29,13 +29,13 @@ class DatabaseService extends GetxService {
         final accountDDL = await rootBundle.loadString(Assets.assetsSqlAccount);
         db.execute(accountDDL);
         db.rawInsert('''
-          INSERT INTO [account] ([name],[emoji],[balance])
+          INSERT INTO [account] ([id],[name],[emoji],[balance])
           VALUES
-          ('Primary Account','🏦',0),
-          ('Secondary Account','🏦',0),
-          ('Wallet','👛',0),
-          ('Primary Credit Card','💳',0),
-          ('Secondary Credit Card','💳',0);
+          ('A20240903104201','Primary Account','🏦',0),
+          ('A20240903104202','Secondary Account','🏦',0),
+          ('A20240903104203','Wallet','👛',0),
+          ('A20240903104204','Primary Credit Card','💳',0),
+          ('A20240903104205','Secondary Credit Card','💳',0);
         ''');
 
         final budgetBucketDDL =
@@ -47,13 +47,13 @@ class DatabaseService extends GetxService {
         db.execute(categoryDDL);
 
         db.rawInsert('''
-          INSERT INTO [category] ([name],[emoji],[default_rule_bucket],[default_record_type])
+          INSERT INTO [category] ([id],[name],[emoji],[default_rule_bucket],[default_record_type])
           VALUES
-          ('Salary','💵','${RuleConstant.na}','${TypeConstant.credit}'),
-          ('Food','🍔','${RuleConstant.wants}','${TypeConstant.debit}'),
-          ('Grocery','🛒','${RuleConstant.needs}','${TypeConstant.debit}'),
-          ('Gold','💰','${RuleConstant.saves}','${TypeConstant.transfer}'),
-          ('Stocks','📈','${RuleConstant.saves}','${TypeConstant.transfer}');
+          ('C20240903104201','Salary','💵','${RuleConstant.na}','${TypeConstant.credit}'),
+          ('C20240903104202','Food','🍔','${RuleConstant.wants}','${TypeConstant.debit}'),
+          ('C20240903104203','Grocery','🛒','${RuleConstant.needs}','${TypeConstant.debit}'),
+          ('C20240903104204','Gold','💰','${RuleConstant.saves}','${TypeConstant.transfer}'),
+          ('C20240903104205','Stocks','📈','${RuleConstant.saves}','${TypeConstant.transfer}');
         ''');
 
         final recordDDL = await rootBundle.loadString(Assets.assetsSqlRecord);

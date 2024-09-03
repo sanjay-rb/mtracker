@@ -1,29 +1,34 @@
 [
     {
+        "id": "C20240903104201",
         "name": "Salary",
         "emoji": "💵",
         "default_rule_bucket": "NA",
         "default_record_type": "Credit"
     },
     {
+        "id": "C20240903104202",
         "name": "Food",
         "emoji": "🍔",
         "default_rule_bucket": "Wants",
         "default_record_type": "Debit"
     },
     {
+        "id": "C20240903104203",
         "name": "Grocery",
         "emoji": "🛒",
         "default_rule_bucket": "Needs",
         "default_record_type": "Debit"
     },
     {
+        "id": "C20240903104204",
         "name": "Gold",
         "emoji": "💰",
         "default_rule_bucket": "Saves",
         "default_record_type": "Transfer"
     },
     {
+        "id": "C20240903104205",
         "name": "Stocks",
         "emoji": "📈",
         "default_rule_bucket": "Saves",

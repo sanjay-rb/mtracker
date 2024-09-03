@@ -1,14 +1,20 @@
 class Category {
-  static const tableName = 'category';
+  static const tableName = "category";
+  String? id;
   String? name;
   String? emoji;
   String? defaultRuleBucket;
   String? defaultRecordType;
 
   Category(
-      {this.name, this.emoji, this.defaultRuleBucket, this.defaultRecordType});
+      {this.id,
+      this.name,
+      this.emoji,
+      this.defaultRuleBucket,
+      this.defaultRecordType});
 
   Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     emoji = json['emoji'];
     defaultRuleBucket = json['default_rule_bucket'];
@@ -17,6 +23,7 @@ class Category {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['emoji'] = emoji;
     data['default_rule_bucket'] = defaultRuleBucket;

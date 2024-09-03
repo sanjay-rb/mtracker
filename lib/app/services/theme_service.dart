@@ -16,7 +16,7 @@ class ThemeService {
 
   static ThemeData getLightTheme(context) {
     ThemeData lightTheme = ThemeData(
-      primarySwatch: getMaterialColor(dominantLight),
+      primarySwatch: getMaterialColor(secondaryLight),
       brightness: Brightness.light,
       primaryColor: dominantLight,
       colorScheme: Theme.of(context).colorScheme.copyWith(
@@ -37,7 +37,7 @@ class ThemeService {
 
   static ThemeData getDarkTheme(context) {
     ThemeData darkTheme = ThemeData(
-      primarySwatch: getMaterialColor(dominantDark),
+      primarySwatch: getMaterialColor(secondaryDark),
       brightness: Brightness.dark,
       primaryColor: dominantDark,
       colorScheme: Theme.of(context).colorScheme.copyWith(

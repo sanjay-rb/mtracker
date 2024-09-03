@@ -1,4 +1,5 @@
 class Record {
+  static const tableName = "record";
   String? id;
   int? amount;
   String? type;

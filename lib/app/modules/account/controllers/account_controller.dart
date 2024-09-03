@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
-import 'package:mtracker/app/data/models/category_model.dart';
+import 'package:mtracker/app/data/models/account_model.dart';
 
-class CategoryController extends GetxController {
+class AccountController extends GetxController {
   TextEditingController emojiController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  Rx<String> type = TypeConstant.credit.obs;
-  Rx<String> rule = RuleConstant.needs.obs;
-
+  TextEditingController balanceController = TextEditingController(text: "0.0");
   @override
   void onInit() {
     if (Get.arguments != null) {
-      Category category = Get.arguments as Category;
+      Account category = Get.arguments as Account;
       emojiController.text = category.emoji!;
       nameController.text = category.name!;
-      type.value = category.defaultRecordType!;
-      rule.value = category.defaultRuleBucket!;
+      balanceController.text = category.balance.toString();
     }
     super.onInit();
-  }
-
-  void updateType(String element) {
-    type.value = element;
-  }
-
-  void updateRule(String element) {
-    rule.value = element;
   }
 
   validateForm() {
@@ -103,7 +90,15 @@ class CategoryController extends GetxController {
       showSnack("Please enter a valid name.");
       return false;
     }
-
+    if (balanceController.text.isEmpty) {
+      showSnack("Please enter a valid balance.");
+      return false;
+    }
+    if (!balanceController.text.isNum) {
+      showSnack(
+          "Please enter a valid number for the balance, avoiding any letters or symbols.");
+      return false;
+    }
     return true;
   }
 }

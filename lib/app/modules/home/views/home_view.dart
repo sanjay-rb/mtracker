@@ -447,7 +447,13 @@ class HomeView extends GetView<HomeController> {
                           ),
                           const Spacer(),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              await Get.toNamed(
+                                Routes.ACCOUNT,
+                                arguments: null,
+                              );
+                              controller.updateAccounts();
+                            },
                             style: ButtonStyle(
                               backgroundColor: WidgetStatePropertyAll(
                                 Theme.of(context).colorScheme.tertiary,
@@ -480,8 +486,12 @@ class HomeView extends GetView<HomeController> {
                             (index) {
                               Account account = controller.accounts[index];
                               return InkWell(
-                                onTap: () {
-                                  debugPrint(account.name);
+                                onTap: () async {
+                                  await Get.toNamed(
+                                    Routes.ACCOUNT,
+                                    arguments: account,
+                                  );
+                                  controller.updateAccounts();
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -543,8 +553,10 @@ class HomeView extends GetView<HomeController> {
                           ),
                           const Spacer(),
                           ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed(Routes.CATEGORY, arguments: null);
+                            onPressed: () async {
+                              await Get.toNamed(Routes.CATEGORY,
+                                  arguments: null);
+                              controller.updateCategories();
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStatePropertyAll(

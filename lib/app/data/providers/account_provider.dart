@@ -12,6 +12,19 @@ class AccountProvider {
     );
   }
 
+  static Future<Account?> readAccountById(String id) async {
+    var db = await DatabaseService().database;
+    var data = await db.query(
+      Account.tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (data.isNotEmpty) {
+      return Account.fromJson(data.first);
+    }
+    return null;
+  }
+
   static Future<List<Account>> readAllAccount() async {
     var db = await DatabaseService().database;
     var data = await db.query(Account.tableName, orderBy: 'id');

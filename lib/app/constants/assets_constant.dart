@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-
+  
   /// Assets for assetsImagesIcon
   /// assets/images/icon.png
   static const String assetsImagesIcon = "assets/images/icon.png";
@@ -18,7 +18,8 @@ class Assets {
   /// assets/sql/category.sql
   static const String assetsSqlCategory = "assets/sql/category.sql";
 
-  /// Assets for assetsSqlRecord
-  /// assets/sql/record.sql
-  static const String assetsSqlRecord = "assets/sql/record.sql";
+  /// Assets for assetsSqlTransactionRecord
+  /// assets/sql/transaction_record.sql
+  static const String assetsSqlTransactionRecord = "assets/sql/transaction_record.sql";
 }
+

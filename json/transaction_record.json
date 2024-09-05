@@ -1,12 +1,12 @@
 [
     {
         "id": "R20240903104201",
-        "amount": 10,
+        "amount": 10.0,
         "type": "Debit",
         "rule": "Needs",
         "date_time": "2024-08-24 21:08:32",
         "note": "Food",
-        "account": "HDFC",
-        "category": "Food"
+        "account": "A20240903104201",
+        "category": "C20240903104202"
     }
 ]

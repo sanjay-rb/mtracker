@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
+import 'package:mtracker/app/data/models/transaction_record_model.dart';
+import 'package:mtracker/app/data/providers/account_provider.dart';
+import 'package:mtracker/app/data/providers/category_provider.dart';
 import 'package:mtracker/app/routes/app_pages.dart';
-import 'package:mtracker/app/services/database_service.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -16,8 +19,9 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var dbClient = DatabaseService();
-          dbClient.deleteDataBase();
+          // var dbClient = DatabaseService();
+          // dbClient.deleteDataBase();
+          Get.toNamed(Routes.RECORD, arguments: null);
         },
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         child: Icon(
@@ -315,111 +319,194 @@ class HomeView extends GetView<HomeController> {
                             horizontal: BorderSide(color: Colors.grey),
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text(
-                                        '🍔',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall,
-                                      ),
-                                    ),
+                        child: Obx(
+                          () => Column(
+                            children: List.generate(
+                              controller.records.length,
+                              (index) {
+                                TransactionRecord record =
+                                    controller.records[index];
+                                String date = DateConstant.dateformat.format(
+                                  DateConstant.dateStringToDateTime(
+                                    record.dateTime!,
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 5,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Food",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                        const SizedBox(height: 2),
-                                        Text(
-                                          "Dosa for breakfast",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
-                                              ),
-                                        ),
-                                        const SizedBox(height: 2),
-                                        Text(
-                                          "HDFC to Food",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
+                                );
+                                String time = DateConstant.timeformat.format(
+                                  DateConstant.dateStringToDateTime(
+                                    record.dateTime!,
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "₹ 10,000",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
-                                                fontWeight: FontWeight.bold,
+                                );
+                                return InkWell(
+                                  onTap: () async {
+                                    await Get.toNamed(
+                                      Routes.RECORD,
+                                      arguments: record,
+                                    );
+                                    controller.updateRecords();
+                                  },
+                                  child: FutureBuilder(
+                                    future: AccountProvider.readAccountById(
+                                        record.account!),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                      Account? account = snapshot.data;
+                                      account ??= Account(name: "NA");
+                                      return FutureBuilder(
+                                        future:
+                                            CategoryProvider.readCategoryById(
+                                                record.category!),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          }
+                                          Category? category = snapshot.data;
+                                          category ??= Category(name: "NA");
+                                          return Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 2,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${category.emoji}',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineSmall,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                          textAlign: TextAlign.end,
-                                        ),
-                                        const SizedBox(height: 2),
-                                        Text(
-                                          "Aug 24, 2024",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
+                                              Expanded(
+                                                flex: 5,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${category.name}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                      ),
+                                                      const SizedBox(height: 2),
+                                                      Text(
+                                                        "${record.note}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                            ),
+                                                      ),
+                                                      const SizedBox(height: 2),
+                                                      Text(
+                                                        "From : ${account!.name}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
-                                        ),
-                                      ],
-                                    ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        "₹ ${record.amount}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                      ),
+                                                      const SizedBox(height: 2),
+                                                      Text(
+                                                        date,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                            ),
+                                                      ),
+                                                      Text(
+                                                        time,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ],

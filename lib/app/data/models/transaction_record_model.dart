@@ -1,7 +1,8 @@
-class Record {
-  static const tableName = "record";
+class TransactionRecord {
+  static const tableName = "transaction_record";
+
   String? id;
-  int? amount;
+  double? amount;
   String? type;
   String? rule;
   String? dateTime;
@@ -9,7 +10,7 @@ class Record {
   String? account;
   String? category;
 
-  Record(
+  TransactionRecord(
       {this.id,
       this.amount,
       this.type,
@@ -19,7 +20,7 @@ class Record {
       this.account,
       this.category});
 
-  Record.fromJson(Map<String, dynamic> json) {
+  TransactionRecord.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
     type = json['type'];

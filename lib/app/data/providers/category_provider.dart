@@ -13,6 +13,19 @@ class CategoryProvider {
     );
   }
 
+  static Future<Category?> readCategoryById(String id) async {
+    var db = await DatabaseService().database;
+    var data = await db.query(
+      Category.tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (data.isNotEmpty) {
+      return Category.fromJson(data.first);
+    }
+    return null;
+  }
+
   static Future<List<Category>> readAllACategory() async {
     var db = await DatabaseService().database;
     var data =

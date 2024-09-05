@@ -16,7 +16,7 @@ class ThemeService {
 
   static ThemeData getLightTheme(context) {
     ThemeData lightTheme = ThemeData(
-      primarySwatch: getMaterialColor(secondaryLight),
+      primarySwatch: getMaterialColor(accentLight),
       brightness: Brightness.light,
       primaryColor: dominantLight,
       colorScheme: Theme.of(context).colorScheme.copyWith(

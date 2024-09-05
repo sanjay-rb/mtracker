@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 
 class DateConstant {
-  static DateFormat dateTimeFormat = DateFormat("yyyy-MM-dd hh:mm:ss a");
-  static DateFormat dateformat = DateFormat("yyyy-MM-dd");
-  static DateFormat timeformat = DateFormat("hh:mm:ss a");
+  static DateFormat dateTimeFormat = DateFormat("dd-MM-yyyy hh:mm a");
+  static DateFormat dateformat = DateFormat("dd-MM-yyyy");
+  static DateFormat timeformat = DateFormat("hh:mm a");
 
   static DateTime dateStringToDateTime(String dateString) {
     return dateTimeFormat.parse(dateString);
@@ -11,5 +11,11 @@ class DateConstant {
 
   static String dateTimeToDateString(DateTime dateTime) {
     return dateTimeFormat.format(dateTime);
+  }
+
+  static String generateID() {
+    DateTime dateTime = DateTime.now();
+    DateFormat format = DateFormat("yyyyMMddHHmmss");
+    return format.format(dateTime);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
@@ -19,9 +20,8 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // var dbClient = DatabaseService();
-          // dbClient.deleteDataBase();
-          Get.toNamed(Routes.RECORD, arguments: null);
+          await Get.toNamed(Routes.RECORD, arguments: null);
+          controller.updateRecords();
         },
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         child: Icon(
@@ -69,7 +69,7 @@ class HomeView extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "AUG 2024",
+                        "${DateFormat.MMMM().format(DateTime.now())} ${DateTime.now().year}",
                         style: Theme.of(context)
                             .textTheme
                             .headlineLarge!
@@ -212,6 +212,46 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 Text(
                                   "Saves :",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                ),
+                                Text(
+                                  "₹ 10,000",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Card(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(1 - .1),
+                        child: SizedBox(
+                          width: Get.size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Unknown :",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -429,7 +469,7 @@ class HomeView extends GetView<HomeController> {
                                                       ),
                                                       const SizedBox(height: 2),
                                                       Text(
-                                                        "From : ${account!.name}",
+                                                        "${account!.name}",
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodySmall!
@@ -457,10 +497,18 @@ class HomeView extends GetView<HomeController> {
                                                             .textTheme
                                                             .titleMedium!
                                                             .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
+                                                              color: record
+                                                                          .type! ==
+                                                                      TypeConstant
+                                                                          .credit
+                                                                  ? Colors.green
+                                                                  : record.type! ==
+                                                                          TypeConstant
+                                                                              .debit
+                                                                      ? Colors
+                                                                          .red
+                                                                      : Colors
+                                                                          .blue,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,

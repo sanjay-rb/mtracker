@@ -63,7 +63,7 @@ class DatabaseService extends GetxService {
         db.rawInsert('''
             INSERT INTO [transaction_record] ([id], [amount], [type], [rule], [date_time], [note], [account], [category]) 
             VALUES
-            ('R20240903104201', 10.12, 'Debit', 'Needs', '2024-09-04 10:05:31 PM', 'Food', 'A20240903104201', 'C20240903104202');
+            ('R20240903104201', 10.12, 'DEBIT', 'NEEDS', '2024-09-04 10:05 PM', 'Food', 'A20240903104201', 'C20240903104202');
         ''');
       },
     );

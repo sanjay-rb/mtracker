@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/rule_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
@@ -204,27 +205,23 @@ class CategoryView extends GetView<CategoryController> {
                       child: MaterialButton(
                         onPressed: () async {
                           if (controller.validateForm()) {
+                            Category newCategoryObj = Category(
+                              name: controller.nameController.text,
+                              emoji: controller.emojiController.text,
+                              defaultRecordType: controller.type.value,
+                              defaultRuleBucket: controller.rule.value,
+                            );
                             if (category != null) {
-                              category!.emoji = controller.emojiController.text;
-                              category!.name = controller.nameController.text;
-                              category!.defaultRecordType =
-                                  controller.type.value;
-                              category!.defaultRuleBucket =
-                                  controller.rule.value;
-                              await CategoryProvider.updateCategory(category!);
-                            } else {
-                              Category newCategoryObj = Category();
-                              newCategoryObj = Category(
-                                id: "C${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}",
-                                name: controller.nameController.text,
-                                emoji: controller.emojiController.text,
-                                defaultRecordType: controller.type.value,
-                                defaultRuleBucket: controller.rule.value,
+                              newCategoryObj.id = category!.id;
+                              await CategoryProvider.updateCategory(
+                                newCategoryObj,
                               );
+                            } else {
+                              newCategoryObj.id = DateConstant.generateID();
                               await CategoryProvider.createCategory(
-                                  newCategoryObj);
+                                newCategoryObj,
+                              );
                             }
-
                             Get.back();
                           }
                         },

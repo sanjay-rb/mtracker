@@ -39,9 +39,23 @@ class _MainAppState extends State<MainApp> {
       title: "MTracker",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: ThemeService.getLightTheme(context),
-      darkTheme: ThemeService.getDarkTheme(context),
-      themeMode: ThemeMode.light,
+      theme: ThemeService.getTheme(
+        dominant: ThemeService.dominantLight,
+        onDominant: ThemeService.onDominantLight,
+        primary: ThemeService.primaryLight,
+        onPrimary: ThemeService.onPrimaryLight,
+        accent: ThemeService.accentLight,
+        onAccent: ThemeService.onAccentLight,
+      ),
+      darkTheme: ThemeService.getTheme(
+        dominant: ThemeService.dominantDark,
+        onDominant: ThemeService.onDominantDark,
+        primary: ThemeService.primaryDark,
+        onPrimary: ThemeService.onPrimaryDark,
+        accent: ThemeService.accentDark,
+        onAccent: ThemeService.onAccentDark,
+      ),
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
     );
   }

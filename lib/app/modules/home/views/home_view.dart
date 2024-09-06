@@ -23,15 +23,10 @@ class HomeView extends GetView<HomeController> {
           await Get.toNamed(Routes.RECORD, arguments: null);
           controller.updateRecords();
         },
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onSecondary,
-        ),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
-          backgroundColor: Theme.of(context).colorScheme.tertiary,
           currentIndex: controller.bottomNavBarIndex.value,
           items: const [
             BottomNavigationBarItem(
@@ -50,8 +45,6 @@ class HomeView extends GetView<HomeController> {
           onTap: (value) {
             controller.updateBottomNavBarIndex(value);
           },
-          unselectedItemColor: Theme.of(context).colorScheme.onSecondary,
-          selectedItemColor: Theme.of(context).colorScheme.secondary,
           showUnselectedLabels: true,
           showSelectedLabels: true,
         ),
@@ -70,17 +63,11 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Text(
                         "${DateFormat.MMMM().format(DateTime.now())} ${DateTime.now().year}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge!
-                            .copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const Divider(),
                       Card(
-                        color: Theme.of(context).colorScheme.tertiary,
+                        color: Theme.of(context).primaryColor,
                         child: SizedBox(
                           width: Get.size.width,
                           child: Padding(
@@ -96,8 +83,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onSecondary,
-                                        fontWeight: FontWeight.bold,
+                                            .onPrimary,
                                       ),
                                 ),
                                 Text(
@@ -108,7 +94,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onSecondary,
+                                            .onPrimary,
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -138,7 +124,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                                 Text(
@@ -147,9 +133,10 @@ class HomeView extends GetView<HomeController> {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
+                                        fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                               ],
@@ -178,7 +165,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                                 Text(
@@ -187,9 +174,10 @@ class HomeView extends GetView<HomeController> {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
+                                        fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                               ],
@@ -218,7 +206,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                                 Text(
@@ -227,9 +215,10 @@ class HomeView extends GetView<HomeController> {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
+                                        fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                               ],
@@ -258,7 +247,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                                 Text(
@@ -267,9 +256,10 @@ class HomeView extends GetView<HomeController> {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
+                                        fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                       ),
                                 ),
                               ],
@@ -298,8 +288,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
-                                        fontWeight: FontWeight.bold,
+                                            .onSecondary,
                                       ),
                                 ),
                                 Text(
@@ -310,7 +299,7 @@ class HomeView extends GetView<HomeController> {
                                       .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -328,26 +317,14 @@ class HomeView extends GetView<HomeController> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                           TextButton.icon(
                             onPressed: () {
                               debugPrint("Filter");
                             },
-                            icon: Icon(
-                              Icons.filter_alt,
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
-                            label: Text(
-                              "Filter",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary,
-                              ),
-                            ),
+                            icon: const Icon(Icons.filter_alt),
+                            label: const Text("Filter"),
                           ),
                         ],
                       ),
@@ -366,12 +343,8 @@ class HomeView extends GetView<HomeController> {
                               (index) {
                                 TransactionRecord record =
                                     controller.records[index];
-                                String date = DateConstant.dateformat.format(
-                                  DateConstant.dateStringToDateTime(
-                                    record.dateTime!,
-                                  ),
-                                );
-                                String time = DateConstant.timeformat.format(
+                                String dateTimeStr =
+                                    DateConstant.dateTimeFormat.format(
                                   DateConstant.dateStringToDateTime(
                                     record.dateTime!,
                                   ),
@@ -445,10 +418,6 @@ class HomeView extends GetView<HomeController> {
                                                             .textTheme
                                                             .titleMedium!
                                                             .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -459,25 +428,17 @@ class HomeView extends GetView<HomeController> {
                                                         "${record.note}",
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
-                                                            ),
+                                                            .bodySmall,
                                                       ),
                                                       const SizedBox(height: 2),
                                                       Text(
-                                                        "${account!.name}",
+                                                        dateTimeStr,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodySmall!
                                                             .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
+                                                              color:
+                                                                  Colors.grey,
                                                             ),
                                                       ),
                                                     ],
@@ -518,28 +479,10 @@ class HomeView extends GetView<HomeController> {
                                                       ),
                                                       const SizedBox(height: 2),
                                                       Text(
-                                                        date,
+                                                        "${account!.name}",
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
-                                                            ),
-                                                      ),
-                                                      Text(
-                                                        time,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onPrimary,
-                                                            ),
+                                                            .bodySmall,
                                                       ),
                                                     ],
                                                   ),
@@ -571,17 +514,10 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           Text(
                             "ACCOUNTS",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           const Spacer(),
-                          ElevatedButton(
+                          ElevatedButton.icon(
                             onPressed: () async {
                               await Get.toNamed(
                                 Routes.ACCOUNT,
@@ -589,19 +525,9 @@ class HomeView extends GetView<HomeController> {
                               );
                               controller.updateAccounts();
                             },
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                Theme.of(context).colorScheme.tertiary,
-                              ),
-                            ),
-                            child: Text(
-                              "Add",
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              ),
-                            ),
-                          )
+                            label: const Text("Add"),
+                            icon: const Icon(Icons.add),
+                          ),
                         ],
                       ),
                       const Divider(),
@@ -677,35 +603,20 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           Text(
                             "CATEGORIES",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           const Spacer(),
-                          ElevatedButton(
+                          ElevatedButton.icon(
                             onPressed: () async {
-                              await Get.toNamed(Routes.CATEGORY,
-                                  arguments: null);
+                              await Get.toNamed(
+                                Routes.CATEGORY,
+                                arguments: null,
+                              );
                               controller.updateCategories();
                             },
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                Theme.of(context).colorScheme.tertiary,
-                              ),
-                            ),
-                            child: Text(
-                              "Add",
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              ),
-                            ),
-                          )
+                            label: const Text("Add"),
+                            icon: const Icon(Icons.add),
+                          ),
                         ],
                       ),
                       const Divider(),

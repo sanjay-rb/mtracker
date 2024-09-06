@@ -2,58 +2,102 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeService {
+  ThemeService._();
+
   static Color dominantLight = const Color(0xffFBFAEE);
+  static Color primaryLight = const Color(0xff53A2BE);
+  static Color accentLight = const Color(0xff0A2239);
+  static Color onDominantLight = const Color(0xFF000000);
+  static Color onPrimaryLight = const Color(0xFF000000);
+  static Color onAccentLight = const Color(0xFFFFFFFF);
 
   static Color dominantDark = const Color(0xff242424);
+  static Color primaryDark = const Color(0xFF133453);
+  static Color accentDark = const Color(0xFF39849F);
+  static Color textDark = const Color(0xffFBFAEE);
+  static Color onDominantDark = const Color(0xFFFFFFFF);
+  static Color onPrimaryDark = const Color(0xFFFFFFFF);
+  static Color onAccentDark = const Color(0xFF000000);
 
-  static Color secondaryLight = const Color(0xff53A2BE);
-
-  static Color secondaryDark = const Color(0xff36778f);
-
-  static Color accentLight = const Color(0xff0A2239);
-
-  static Color accentDark = const Color(0xff15497a);
-
-  static ThemeData getLightTheme(context) {
-    ThemeData lightTheme = ThemeData(
-      primarySwatch: getMaterialColor(accentLight),
-      brightness: Brightness.light,
-      primaryColor: dominantLight,
-      colorScheme: Theme.of(context).colorScheme.copyWith(
-            brightness: Brightness.light,
-            primary: dominantLight,
-            secondary: secondaryLight,
-            tertiary: accentLight,
-            onPrimary: Colors.black,
-            onSecondary: Colors.white,
+  static ThemeData getTheme(
+      {dominant, primary, accent, onDominant, onPrimary, onAccent}) {
+    return ThemeData(
+      primarySwatch: ThemeService.getMaterialColor(primary),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        primary: primary,
+        secondary: accent,
+        onPrimary: onPrimary,
+        onSecondary: onAccent,
+      ),
+      fontFamily: GoogleFonts.fredoka().fontFamily,
+      textTheme: TextTheme(
+        headlineLarge:
+            TextStyle(fontWeight: FontWeight.bold, color: onDominant),
+        headlineMedium:
+            TextStyle(fontWeight: FontWeight.bold, color: onDominant),
+        headlineSmall:
+            TextStyle(fontWeight: FontWeight.bold, color: onDominant),
+        bodyLarge: TextStyle(color: onDominant),
+        bodyMedium: TextStyle(color: onDominant),
+        bodySmall: TextStyle(color: onDominant),
+        titleLarge: TextStyle(color: onDominant),
+        titleMedium: TextStyle(color: onDominant),
+        titleSmall: TextStyle(color: onDominant),
+        labelLarge: TextStyle(color: onDominant),
+        labelMedium: TextStyle(color: onDominant),
+        labelSmall: TextStyle(color: onDominant),
+      ),
+      iconTheme: IconThemeData(color: onDominant),
+      scaffoldBackgroundColor: dominant,
+      primaryColor: primary,
+      primaryColorLight: primary,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: accent,
+        foregroundColor: Colors.white,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: accent,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: primary,
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(accent),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(accent),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(accent),
+          foregroundColor: const WidgetStatePropertyAll(Colors.white),
+          shape: WidgetStatePropertyAll(
+            ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
           ),
-      scaffoldBackgroundColor: dominantLight,
-      textTheme: GoogleFonts.fredokaTextTheme(
-        Theme.of(context).textTheme,
+          textStyle: const WidgetStatePropertyAll(
+            TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: accent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: primary),
+        ),
+        hintStyle: TextStyle(
+          color: onDominant.withOpacity(.5),
+        ),
       ),
     );
-    return lightTheme;
-  }
-
-  static ThemeData getDarkTheme(context) {
-    ThemeData darkTheme = ThemeData(
-      primarySwatch: getMaterialColor(secondaryDark),
-      brightness: Brightness.dark,
-      primaryColor: dominantDark,
-      colorScheme: Theme.of(context).colorScheme.copyWith(
-            brightness: Brightness.dark,
-            primary: dominantDark,
-            secondary: secondaryDark,
-            tertiary: accentDark,
-            onPrimary: Colors.white,
-            onSecondary: Colors.black,
-          ),
-      scaffoldBackgroundColor: dominantDark,
-      textTheme: GoogleFonts.fredokaTextTheme(
-        Theme.of(context).textTheme,
-      ),
-    );
-    return darkTheme;
   }
 
   static MaterialColor getMaterialColor(Color color) {

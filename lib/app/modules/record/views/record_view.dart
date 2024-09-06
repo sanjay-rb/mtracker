@@ -11,6 +11,7 @@ import 'package:mtracker/app/data/providers/account_provider.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
 import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 import 'package:mtracker/app/widgets/bottom_sheet_widget.dart';
+import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 
 import '../controllers/record_controller.dart';
 
@@ -27,42 +28,14 @@ class RecordView extends GetView<RecordController> {
             children: [
               Text(
                 "💸 RECORD",
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               const Divider(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  autofocus: true,
-                  controller: controller.amountController,
-                  cursorColor: Theme.of(context).colorScheme.secondary,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    signed: true,
-                    decimal: true,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText:
-                        record == null ? '0.0' : record!.amount.toString(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
+              TextInputFieldWidget(
+                textEditingController: controller.amountController,
+                hint: record == null ? '0.0' : record!.amount.toString(),
+                type: TextInputType.number,
+                align: TextAlign.center,
               ),
               const SizedBox(height: 10),
               Row(
@@ -70,18 +43,14 @@ class RecordView extends GetView<RecordController> {
                   Expanded(
                     child: Text(
                       "Account",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),
                   Expanded(
                     child: Text(
                       "Category",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -93,7 +62,7 @@ class RecordView extends GetView<RecordController> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MaterialButton(
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           AccountProvider.readAllAccount().then((accountList) {
                             showModalBottomSheet<Account>(
@@ -111,19 +80,14 @@ class RecordView extends GetView<RecordController> {
                             });
                           });
                         },
-                        color: Theme.of(context).colorScheme.tertiary,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: FittedBox(
-                            child: Obx(
-                              () => Text(
-                                '${controller.account.value!.emoji!} ${controller.account.value!.name!}',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSecondary,
-                                ),
-                              ),
-                            ),
+                        label: Obx(
+                          () => Text(
+                            controller.account.value!.name.toString(),
+                          ),
+                        ),
+                        icon: Obx(
+                          () => Text(
+                            controller.account.value!.emoji.toString(),
                           ),
                         ),
                       ),
@@ -132,7 +96,7 @@ class RecordView extends GetView<RecordController> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MaterialButton(
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           CategoryProvider.readAllACategory()
                               .then((accountList) {
@@ -152,16 +116,14 @@ class RecordView extends GetView<RecordController> {
                             });
                           });
                         },
-                        color: Theme.of(context).colorScheme.tertiary,
-                        child: FittedBox(
-                          child: Obx(
-                            () => Text(
-                              '${controller.category.value!.emoji!} ${controller.category.value!.name!}',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              ),
-                            ),
+                        label: Obx(
+                          () => Text(
+                            controller.category.value!.name.toString(),
+                          ),
+                        ),
+                        icon: Obx(
+                          () => Text(
+                            controller.category.value!.emoji.toString(),
                           ),
                         ),
                       ),
@@ -177,30 +139,18 @@ class RecordView extends GetView<RecordController> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Obx(
-                            () => MaterialButton(
+                            () => ElevatedButton(
                               onPressed: () {
                                 controller.updateType(element);
                               },
-                              color: controller.type.value == element
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).colorScheme.secondary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: FittedBox(
-                                  child: Text(
-                                    element,
-                                    style: TextStyle(
-                                      color: controller.type.value == element
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                    ),
-                                  ),
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  controller.type.value == element
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
+                              child: Text(element),
                             ),
                           ),
                         ),
@@ -216,30 +166,18 @@ class RecordView extends GetView<RecordController> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Obx(
-                            () => MaterialButton(
+                            () => ElevatedButton(
                               onPressed: () {
                                 controller.updateRule(element);
                               },
-                              color: controller.rule.value == element
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).colorScheme.secondary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: FittedBox(
-                                  child: Text(
-                                    element,
-                                    style: TextStyle(
-                                      color: controller.rule.value == element
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                    ),
-                                  ),
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  controller.rule.value == element
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
+                              child: Text(element),
                             ),
                           ),
                         ),
@@ -248,102 +186,49 @@ class RecordView extends GetView<RecordController> {
                     .toList(),
               ),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  autofocus: true,
-                  controller: controller.noteController,
-                  cursorColor: Theme.of(context).colorScheme.secondary,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: record == null ? 'Note' : record!.note,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
+              TextInputFieldWidget(
+                textEditingController: controller.noteController,
+                hint: record == null ? 'Note' : record!.note.toString(),
+                type: TextInputType.text,
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(
-                  onPressed: () async {
-                    DateTime? date = await showDatePicker(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    showDatePicker(
                       context: context,
                       firstDate: DateTime(DateTime.now().year - 1),
                       lastDate: DateTime(DateTime.now().year + 1),
-                      builder: (context, child) => Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
-                            primary: Theme.of(context).colorScheme.secondary,
-                            onPrimary: Theme.of(context).colorScheme.primary,
-                            onSurface: Theme.of(context).colorScheme.tertiary,
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.tertiary),
-                          ),
-                        ),
-                        child: child!,
-                      ),
+                      initialDate: DateTime.now(),
+                    ).then(
+                      (date) {
+                        if (date != null) {
+                          showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then(
+                            (time) {
+                              if (time != null) {
+                                DateTime dateTime = DateTime(
+                                  date.year,
+                                  date.month,
+                                  date.day,
+                                  time.hour,
+                                  time.minute,
+                                );
+                                controller.updateDateTime(dateTime);
+                              }
+                            },
+                          );
+                        }
+                      },
                     );
-                    TimeOfDay? time = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                      builder: (context, child) => Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
-                            primary: Theme.of(context).colorScheme.secondary,
-                            onPrimary: Theme.of(context).colorScheme.primary,
-                            onSurface: Theme.of(context).colorScheme.tertiary,
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.tertiary),
-                          ),
-                        ),
-                        child: child!,
-                      ),
-                    );
-                    if (date != null && time != null) {
-                      DateTime dateTime = DateTime(
-                        date.year,
-                        date.month,
-                        date.day,
-                        time.hour,
-                        time.minute,
-                      );
-                      controller.updateDateTime(dateTime);
-                    }
                   },
-                  color: Theme.of(context).colorScheme.tertiary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Obx(
-                      () => FittedBox(
-                        child: Text(
-                          controller.dateTime.value,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                        ),
-                      ),
-                    ),
+                  label: Obx(
+                    () => Text(controller.dateTime.value),
                   ),
+                  icon: const Icon(Icons.access_time),
                 ),
               ),
               const SizedBox(height: 10),
@@ -353,7 +238,9 @@ class RecordView extends GetView<RecordController> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.delete),
+                          label: const Text("DELETE"),
                           onPressed: () async {
                             if (controller.validateForm()) {
                               await TransactionRecordProvider.deleteRecord(
@@ -361,11 +248,9 @@ class RecordView extends GetView<RecordController> {
                               Get.back();
                             }
                           },
-                          color: Colors.red,
-                          child: const Padding(
-                            padding: EdgeInsets.all(2.0),
-                            child: FittedBox(
-                              child: Text("DELETE"),
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Colors.red.shade800,
                             ),
                           ),
                         ),
@@ -374,7 +259,9 @@ class RecordView extends GetView<RecordController> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MaterialButton(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.save),
+                        label: const Text("SAVE"),
                         onPressed: () async {
                           if (controller.validateForm()) {
                             TransactionRecord newObj = TransactionRecord(
@@ -404,11 +291,9 @@ class RecordView extends GetView<RecordController> {
                             Get.back(closeOverlays: true);
                           }
                         },
-                        color: Colors.green,
-                        child: const Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: FittedBox(
-                            child: Text("SAVE"),
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Colors.green.shade800,
                           ),
                         ),
                       ),

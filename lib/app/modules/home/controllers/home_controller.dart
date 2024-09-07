@@ -60,6 +60,17 @@ class HomeController extends GetxController {
     BudgetBucket? value = await BudgetBucketProvider.readBucketByYearMonth();
     if (value != null) {
       bucket.value = value;
+    } else {
+      bucket.value = BudgetBucket(
+        id: DateConstant.generateID(),
+        yearMonth: DateFormat.yM().format(DateTime.now()),
+        totalCredit: 0,
+        needs: 0,
+        saves: 0,
+        wants: 0,
+        na: 0,
+        totalDebit: 0,
+      );
     }
   }
 }

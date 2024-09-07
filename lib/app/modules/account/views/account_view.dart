@@ -33,6 +33,7 @@ class AccountView extends GetView<AccountController> {
                       hint: account == null ? 'Emoji' : account!.emoji!,
                       textEditingController: controller.emojiController,
                       type: TextInputType.text,
+                      align: TextAlign.center,
                     ),
                   ),
                   Expanded(
@@ -48,7 +49,7 @@ class AccountView extends GetView<AccountController> {
               const SizedBox(height: 20),
               TextInputFieldWidget(
                 hint: account == null ? 'Balance' : account!.balance.toString(),
-                textEditingController: controller.nameController,
+                textEditingController: controller.balanceController,
                 type: TextInputType.text,
               ),
               const SizedBox(height: 20),

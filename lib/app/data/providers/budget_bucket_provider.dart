@@ -1,27 +1,49 @@
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:mtracker/app/services/database_service.dart';
 
 import '../models/budget_bucket_model.dart';
 
-class BudgetBucketProvider extends GetConnect {
-  @override
-  void onInit() {
-    httpClient.defaultDecoder = (map) {
-      if (map is Map<String, dynamic>) return BudgetBucket.fromJson(map);
-      if (map is List) {
-        return map.map((item) => BudgetBucket.fromJson(item)).toList();
-      }
-    };
-    httpClient.baseUrl = 'YOUR-API-URL';
+class BudgetBucketProvider {
+  static Future createBucket(BudgetBucket bucket) async {
+    DatabaseService databaseService = DatabaseService();
+    var db = await databaseService.database;
+    await db.insert(
+      BudgetBucket.tableName,
+      bucket.toJson(),
+    );
   }
 
-  Future<BudgetBucket?> getBudgetBucket(int id) async {
-    final response = await get('budgetbucket/$id');
-    return response.body;
+  static Future<BudgetBucket?> readBucketByYearMonth() async {
+    String yearMonth = DateFormat.yM().format(DateTime.now());
+    DatabaseService databaseService = DatabaseService();
+    var db = await databaseService.database;
+    var data = await db.query(
+      BudgetBucket.tableName,
+      where: 'year_month = ?',
+      whereArgs: [yearMonth],
+    );
+    if (data.isNotEmpty) {
+      return BudgetBucket.fromJson(data.first);
+    }
+    return null;
   }
 
-  Future<Response<BudgetBucket>> postBudgetBucket(
-          BudgetBucket budgetbucket) async =>
-      await post('budgetbucket', budgetbucket);
-  Future<Response> deleteBudgetBucket(int id) async =>
-      await delete('budgetbucket/$id');
+  static Future<List<BudgetBucket>> readAllBucket() async {
+    var db = await DatabaseService().database;
+    var data = await db.query(BudgetBucket.tableName, orderBy: 'id');
+    return data.map((e) {
+      return BudgetBucket.fromJson(e);
+    }).toList();
+  }
+
+  static Future updateBucket(BudgetBucket bucket) async {
+    DatabaseService databaseService = DatabaseService();
+    var db = await databaseService.database;
+    await db.update(
+      BudgetBucket.tableName,
+      bucket.toJson(),
+      where: 'id = ?',
+      whereArgs: [bucket.id],
+    );
+  }
 }

@@ -7,6 +7,7 @@ abstract class Routes {
   static const CATEGORY = _Paths.CATEGORY;
   static const ACCOUNT = _Paths.ACCOUNT;
   static const RECORD = _Paths.RECORD;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const CATEGORY = '/category';
   static const ACCOUNT = '/account';
   static const RECORD = '/record';
+  static const SETTINGS = '/settings';
 }

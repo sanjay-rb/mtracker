@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/rule_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
@@ -9,7 +8,6 @@ import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:mtracker/app/data/providers/account_provider.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
-import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 import 'package:mtracker/app/widgets/bottom_sheet_widget.dart';
 import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 
@@ -98,7 +96,7 @@ class RecordView extends GetView<RecordController> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          CategoryProvider.readAllACategory()
+                          CategoryProvider.readAllCategory()
                               .then((accountList) {
                             showModalBottomSheet<Category>(
                               context: context,
@@ -242,11 +240,7 @@ class RecordView extends GetView<RecordController> {
                           icon: const Icon(Icons.delete),
                           label: const Text("DELETE"),
                           onPressed: () async {
-                            if (controller.validateForm()) {
-                              await TransactionRecordProvider.deleteRecord(
-                                  record!);
-                              Get.back();
-                            }
+                            await controller.deleteRecord(record);
                           },
                           style: ButtonStyle(
                             backgroundColor: WidgetStatePropertyAll(
@@ -263,33 +257,7 @@ class RecordView extends GetView<RecordController> {
                         icon: const Icon(Icons.save),
                         label: const Text("SAVE"),
                         onPressed: () async {
-                          if (controller.validateForm()) {
-                            TransactionRecord newObj = TransactionRecord(
-                              account: controller.account.value!.id!,
-                              amount: double.parse(
-                                controller.amountController.text,
-                              ),
-                              category: controller.category.value!.id,
-                              note: controller.noteController.text,
-                              rule: controller.rule.value,
-                              type: controller.type.value,
-                              dateTime: DateConstant.dateTimeToDateString(
-                                DateTime.now(),
-                              ),
-                            );
-                            if (record != null) {
-                              newObj.id = record!.id;
-                              await TransactionRecordProvider.updateRecord(
-                                newObj,
-                              );
-                            } else {
-                              newObj.id = DateConstant.generateID();
-                              await TransactionRecordProvider.createRecord(
-                                newObj,
-                              );
-                            }
-                            Get.back(closeOverlays: true);
-                          }
+                          await controller.saveRecord(record);
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(

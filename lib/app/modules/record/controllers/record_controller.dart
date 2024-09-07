@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/rule_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
+import 'package:mtracker/app/data/models/budget_bucket_model.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
+import 'package:mtracker/app/data/providers/budget_bucket_provider.dart';
+import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 import 'package:mtracker/app/modules/home/controllers/home_controller.dart';
 
 class RecordController extends GetxController {
@@ -105,5 +109,73 @@ class RecordController extends GetxController {
 
   void updateDateTime(DateTime value) {
     dateTime.value = DateConstant.dateTimeToDateString(value);
+  }
+
+  Future<void> saveRecord(TransactionRecord? record) async {
+    if (validateForm()) {
+      TransactionRecord newObj = TransactionRecord(
+        account: account.value!.id!,
+        amount: double.parse(
+          amountController.text,
+        ),
+        category: category.value!.id,
+        note: noteController.text,
+        rule: rule.value,
+        type: type.value,
+        dateTime: DateConstant.dateTimeToDateString(
+          DateTime.now(),
+        ),
+      );
+      if (record != null) {
+        newObj.id = record.id;
+        await TransactionRecordProvider.updateRecord(
+          newObj,
+        );
+      } else {
+        newObj.id = DateConstant.generateID();
+        await TransactionRecordProvider.createRecord(
+          newObj,
+        );
+      }
+      if (newObj.type == TypeConstant.credit) {
+        BudgetBucket? bucket =
+            await BudgetBucketProvider.readBucketByYearMonth();
+        BudgetBucket newBucketObj = BudgetBucket();
+        if (bucket == null) {
+          newBucketObj = BudgetBucket(
+            id: DateConstant.generateID(),
+            totalCredit: newObj.amount,
+            needs: (newObj.amount! * .5),
+            wants: (newObj.amount! * .3),
+            saves: (newObj.amount! * .2),
+            na: 0,
+            totalDebit: 0,
+            yearMonth: DateFormat.yM().format(DateTime.now()),
+          );
+          await BudgetBucketProvider.createBucket(newBucketObj);
+        } else {
+          double totalAmt = newObj.amount! + bucket.totalCredit!;
+          newBucketObj = BudgetBucket(
+            id: bucket.id,
+            totalCredit: totalAmt,
+            needs: (totalAmt * .5),
+            wants: (totalAmt * .3),
+            saves: (totalAmt * .2),
+            na: 0,
+            totalDebit: 0,
+            yearMonth: bucket.yearMonth,
+          );
+          await BudgetBucketProvider.updateBucket(newBucketObj);
+        }
+      }
+      Get.back(closeOverlays: true);
+    }
+  }
+
+  Future<void> deleteRecord(TransactionRecord? record) async {
+    if (validateForm()) {
+      await TransactionRecordProvider.deleteRecord(record!);
+      Get.back();
+    }
   }
 }

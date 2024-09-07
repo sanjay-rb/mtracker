@@ -55,7 +55,7 @@ class _MainAppState extends State<MainApp> {
         accent: ThemeService.accentDark,
         onAccent: ThemeService.onAccentDark,
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
     );
   }

@@ -5,6 +5,7 @@ CREATE TABLE [budget_bucket] (
   [needs] REAL,
   [wants] REAL,
   [saves] REAL,
+  [na] REAL,
   [total_debit] REAL
 );
 -- created by https://konbert.com/convert/json/to/sql

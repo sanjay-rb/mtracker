@@ -4,16 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 class ThemeService {
   ThemeService._();
 
-  static Color dominantLight = const Color(0xffFBFAEE);
-  static Color primaryLight = const Color(0xff53A2BE);
-  static Color accentLight = const Color(0xff0A2239);
-  static Color onDominantLight = const Color(0xFF000000);
+  static Color dominantLight = const Color(0xffFFF7D6); // #FFF7D6
+  static Color primaryLight = const Color(0xff00C6B9); // #00C6B9
+  static Color accentLight = const Color(0xff0A2239); // #0A2239
+  static Color onDominantLight = const Color(0xFF272643); // #272643
   static Color onPrimaryLight = const Color(0xFF000000);
   static Color onAccentLight = const Color(0xFFFFFFFF);
 
-  static Color dominantDark = const Color(0xff242424);
-  static Color primaryDark = const Color(0xFF133453);
-  static Color accentDark = const Color(0xFF39849F);
+  static Color dominantDark = const Color(0xFF48453C); // #A2ACBD
+  static Color primaryDark = const Color(0xFF1B3F61); // #3E4756
+  static Color accentDark = const Color(0xFF1F5F77); // #0A2239
   static Color textDark = const Color(0xffFBFAEE);
   static Color onDominantDark = const Color(0xFFFFFFFF);
   static Color onPrimaryDark = const Color(0xFFFFFFFF);
@@ -53,16 +53,17 @@ class ThemeService {
       primaryColorLight: primary,
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: accent,
-        foregroundColor: Colors.white,
+        foregroundColor: onAccent,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: accent,
-        selectedItemColor: Colors.white,
+        selectedItemColor: onAccent,
         unselectedItemColor: primary,
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
-          foregroundColor: WidgetStatePropertyAll(accent),
+          backgroundColor: WidgetStatePropertyAll(accent),
+          foregroundColor: WidgetStatePropertyAll(onAccent),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -73,7 +74,7 @@ class ThemeService {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(accent),
-          foregroundColor: const WidgetStatePropertyAll(Colors.white),
+          foregroundColor: WidgetStatePropertyAll(onAccent),
           shape: WidgetStatePropertyAll(
             ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
@@ -97,6 +98,8 @@ class ThemeService {
           color: onDominant.withOpacity(.5),
         ),
       ),
+      dividerColor: accent,
+      dividerTheme: DividerThemeData(color: accent),
     );
   }
 

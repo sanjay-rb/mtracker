@@ -1,3 +1,4 @@
+import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/services/database_service.dart';
 
 import '../models/category_model.dart';
@@ -26,10 +27,21 @@ class CategoryProvider {
     return null;
   }
 
-  static Future<List<Category>> readAllACategory() async {
+  static Future<List<Category>> readAllCategory() async {
+    List<Category> debit = await readCategoryByType(TypeConstant.debit);
+    List<Category> credit = await readCategoryByType(TypeConstant.credit);
+    List<Category> transfer = await readCategoryByType(TypeConstant.transfer);
+
+    return debit + transfer + credit;
+  }
+
+  static Future<List<Category>> readCategoryByType(String type) async {
     var db = await DatabaseService().database;
-    var data =
-        await db.query(Category.tableName, orderBy: "default_record_type");
+    var data = await db.query(
+      Category.tableName,
+      where: 'default_record_type = ?',
+      whereArgs: [type],
+    );
     return data.map((e) {
       return Category.fromJson(e);
     }).toList();

@@ -10,6 +10,9 @@ import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:mtracker/app/data/providers/account_provider.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
 import 'package:mtracker/app/routes/app_pages.dart';
+import 'package:mtracker/app/services/database_service.dart';
+import 'package:mtracker/app/widgets/bucket_budget_widget.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -22,6 +25,7 @@ class HomeView extends GetView<HomeController> {
         onPressed: () async {
           await Get.toNamed(Routes.RECORD, arguments: null);
           controller.updateRecords();
+          controller.updateBuckets();
         },
         child: const Icon(Icons.add),
       ),
@@ -61,253 +65,31 @@ class HomeView extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "${DateFormat.MMMM().format(DateTime.now())} ${DateTime.now().year}",
-                        style: Theme.of(context).textTheme.headlineLarge,
+                      Row(
+                        children: [
+                          Text(
+                            DateFormat.yMMMM().format(DateTime.now()),
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          const Spacer(),
+                          IconButton.filled(
+                            onPressed: () async {
+                              DatabaseService service = DatabaseService();
+                              await service.resetDatabase();
+                              // Database db = await service.database;
+                              // await service.dropAndRecreateTable(db);
+                              controller.updateAccounts();
+                              controller.updateBuckets();
+                              controller.updateCategories();
+                              controller.updateRecords();
+                            },
+                            icon: const Icon(Icons.settings),
+                          ),
+                        ],
                       ),
                       const Divider(),
-                      Card(
-                        color: Theme.of(context).primaryColor,
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total Credit :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(1 - .5),
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Needs :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(1 - .3),
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Wants :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(1 - .2),
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Saves :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(1 - .1),
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Unknown :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(1),
-                        child: SizedBox(
-                          width: Get.size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total Debit :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                ),
-                                Text(
-                                  "₹ 10,000",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      const BucketBudgetWidget(),
                       const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -356,6 +138,7 @@ class HomeView extends GetView<HomeController> {
                                       arguments: record,
                                     );
                                     controller.updateRecords();
+                                    controller.updateBuckets();
                                   },
                                   child: FutureBuilder(
                                     future: AccountProvider.readAccountById(

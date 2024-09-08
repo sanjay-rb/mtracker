@@ -8,7 +8,7 @@ class BudgetBucketProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.insert(
-      BudgetBucket.tableName,
+      BudgetBucket.TABLE_NAME,
       bucket.toJson(),
     );
   }
@@ -18,7 +18,7 @@ class BudgetBucketProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     var data = await db.query(
-      BudgetBucket.tableName,
+      BudgetBucket.TABLE_NAME,
       where: 'year_month = ?',
       whereArgs: [yearMonth],
     );
@@ -30,7 +30,7 @@ class BudgetBucketProvider {
 
   static Future<List<BudgetBucket>> readAllBucket() async {
     var db = await DatabaseService().database;
-    var data = await db.query(BudgetBucket.tableName, orderBy: 'id');
+    var data = await db.query(BudgetBucket.TABLE_NAME, orderBy: 'id');
     return data.map((e) {
       return BudgetBucket.fromJson(e);
     }).toList();
@@ -40,7 +40,7 @@ class BudgetBucketProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.update(
-      BudgetBucket.tableName,
+      BudgetBucket.TABLE_NAME,
       bucket.toJson(),
       where: 'id = ?',
       whereArgs: [bucket.id],

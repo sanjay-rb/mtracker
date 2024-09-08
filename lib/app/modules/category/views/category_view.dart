@@ -86,40 +86,54 @@ class CategoryView extends GetView<CategoryController> {
                     .toList(),
               ),
               const SizedBox(height: 20),
-              Row(
-                children: RuleConstant.values
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => ElevatedButton(
-                              onPressed: () {
-                                controller.updateRule(element);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  controller.rule.value == element
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.secondary,
+              Obx(
+                () => Column(
+                  children: [
+                    if (controller.type.value == TypeConstant.debit)
+                      Row(
+                        children: RuleConstant.values
+                            .map(
+                              (String element) => Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Obx(
+                                    () => ElevatedButton(
+                                      onPressed: () {
+                                        controller.updateRule(element);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                          controller.rule.value == element
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        element,
+                                        style: TextStyle(
+                                          color:
+                                              controller.rule.value == element
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimary
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .onSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              child: Text(
-                                element,
-                                style: TextStyle(
-                                  color: controller.rule.value == element
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                            )
+                            .toList(),
                       ),
-                    )
-                    .toList(),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               Row(
@@ -156,8 +170,8 @@ class CategoryView extends GetView<CategoryController> {
                             Category newCategoryObj = Category(
                               name: controller.nameController.text,
                               emoji: controller.emojiController.text,
-                              defaultRecordType: controller.type.value,
-                              defaultRuleBucket: controller.rule.value,
+                              type: controller.type.value,
+                              rule: controller.rule.value,
                             );
                             if (category != null) {
                               newCategoryObj.id = category!.id;

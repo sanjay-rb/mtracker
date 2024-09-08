@@ -25,7 +25,6 @@ class HomeController extends GetxController {
     needs: 0,
     saves: 0,
     wants: 0,
-    na: 0,
     totalDebit: 0,
   ).obs;
 
@@ -68,7 +67,6 @@ class HomeController extends GetxController {
         needs: 0,
         saves: 0,
         wants: 0,
-        na: 0,
         totalDebit: 0,
       );
     }

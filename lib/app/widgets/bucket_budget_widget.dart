@@ -132,36 +132,6 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
         ),
         const SizedBox(height: 10),
         Card(
-          color: Theme.of(context).colorScheme.secondary.withOpacity(1 - .1),
-          child: SizedBox(
-            width: Get.size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Unknown :",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                  ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.na}",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Card(
           color: Theme.of(context).colorScheme.secondary.withOpacity(1),
           child: SizedBox(
             width: Get.size.width,

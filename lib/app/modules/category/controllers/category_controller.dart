@@ -7,8 +7,8 @@ import 'package:mtracker/app/data/models/category_model.dart';
 class CategoryController extends GetxController {
   TextEditingController emojiController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  Rx<String> type = TypeConstant.credit.obs;
-  Rx<String> rule = RuleConstant.needs.obs;
+  Rx<String> type = TypeConstant.debit.obs;
+  Rx<String> rule = RuleConstant.nr.obs;
 
   @override
   void onInit() {
@@ -16,14 +16,17 @@ class CategoryController extends GetxController {
       Category category = Get.arguments as Category;
       emojiController.text = category.emoji!;
       nameController.text = category.name!;
-      type.value = category.defaultRecordType!;
-      rule.value = category.defaultRuleBucket!;
+      updateType(category.type!);
+      updateRule(category.rule!);
     }
     super.onInit();
   }
 
   void updateType(String element) {
     type.value = element;
+    if (element == TypeConstant.credit) {
+      rule.value = RuleConstant.nr;
+    }
   }
 
   void updateRule(String element) {

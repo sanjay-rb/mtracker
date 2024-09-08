@@ -31,10 +31,6 @@ flutter_launcher_icons:
 flutter: 
   assets: 
     - assets/
-    - assets/sql/account.sql
-    - assets/sql/budget_bucket.sql
-    - assets/sql/category.sql
-    - assets/sql/transaction_record.sql
   uses-material-design: true
 
 flutter_assets: 

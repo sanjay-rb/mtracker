@@ -1,46 +1,50 @@
 class TransactionRecord {
-  static const tableName = "transaction_record";
+  static const TABLE_NAME = 'transaction_record';
 
   String? id;
-  double? amount;
   String? type;
+  double? amount;
+  String? note;
+  String? sourceAccount;
+  String? targetAccount;
+  String? category;
   String? rule;
   String? dateTime;
-  String? note;
-  String? account;
-  String? category;
 
   TransactionRecord(
       {this.id,
-      this.amount,
       this.type,
-      this.rule,
-      this.dateTime,
+      this.amount,
       this.note,
-      this.account,
-      this.category});
+      this.sourceAccount,
+      this.targetAccount,
+      this.category,
+      this.rule,
+      this.dateTime});
 
   TransactionRecord.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    amount = json['amount'];
     type = json['type'];
+    amount = json['amount'];
+    note = json['note'];
+    sourceAccount = json['source_account'];
+    targetAccount = json['target_account'];
+    category = json['category'];
     rule = json['rule'];
     dateTime = json['date_time'];
-    note = json['note'];
-    account = json['account'];
-    category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
-    data['amount'] = amount;
     data['type'] = type;
+    data['amount'] = amount;
+    data['note'] = note;
+    data['source_account'] = sourceAccount;
+    data['target_account'] = targetAccount;
+    data['category'] = category;
     data['rule'] = rule;
     data['date_time'] = dateTime;
-    data['note'] = note;
-    data['account'] = account;
-    data['category'] = category;
     return data;
   }
 }

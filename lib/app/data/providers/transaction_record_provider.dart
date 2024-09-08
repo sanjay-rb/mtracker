@@ -7,7 +7,7 @@ class TransactionRecordProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.insert(
-      TransactionRecord.tableName,
+      TransactionRecord.TABLE_NAME,
       record.toJson(),
     );
   }
@@ -19,7 +19,7 @@ class TransactionRecordProvider {
     var db = await DatabaseService().database;
 
     var data = await db.query(
-      TransactionRecord.tableName,
+      TransactionRecord.TABLE_NAME,
       where: 'date_time LIKE ?',
       whereArgs: ['%$currentMonth%'],
     );
@@ -32,7 +32,7 @@ class TransactionRecordProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.update(
-      TransactionRecord.tableName,
+      TransactionRecord.TABLE_NAME,
       record.toJson(),
       where: 'id = ?',
       whereArgs: [record.id],
@@ -43,7 +43,7 @@ class TransactionRecordProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.delete(
-      TransactionRecord.tableName,
+      TransactionRecord.TABLE_NAME,
       where: 'id = ?',
       whereArgs: [record.id],
     );

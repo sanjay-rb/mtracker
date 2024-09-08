@@ -1,12 +1,12 @@
 class BudgetBucket {
-  static const tableName = "budget_bucket";
+  static const TABLE_NAME = 'budget_bucket';
+
   String? id;
   String? yearMonth;
   double? totalCredit;
   double? needs;
   double? wants;
   double? saves;
-  double? na;
   double? totalDebit;
 
   BudgetBucket(
@@ -16,7 +16,6 @@ class BudgetBucket {
       this.needs,
       this.wants,
       this.saves,
-      this.na,
       this.totalDebit});
 
   BudgetBucket.fromJson(Map<String, dynamic> json) {
@@ -26,7 +25,6 @@ class BudgetBucket {
     needs = json['needs'];
     wants = json['wants'];
     saves = json['saves'];
-    na = json['na'];
     totalDebit = json['total_debit'];
   }
 
@@ -38,7 +36,6 @@ class BudgetBucket {
     data['needs'] = needs;
     data['wants'] = wants;
     data['saves'] = saves;
-    data['na'] = na;
     data['total_debit'] = totalDebit;
     return data;
   }

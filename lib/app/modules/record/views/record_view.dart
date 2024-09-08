@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/rule_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
-import 'package:mtracker/app/data/models/account_model.dart';
-import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
-import 'package:mtracker/app/data/providers/account_provider.dart';
-import 'package:mtracker/app/data/providers/category_provider.dart';
-import 'package:mtracker/app/widgets/bottom_sheet_widget.dart';
+import 'package:mtracker/app/widgets/from_to_widget.dart';
 import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 
 import '../controllers/record_controller.dart';
@@ -29,109 +26,8 @@ class RecordView extends GetView<RecordController> {
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const Divider(),
-              TextInputFieldWidget(
-                textEditingController: controller.amountController,
-                hint: record == null ? '0.0' : record!.amount.toString(),
-                type: TextInputType.number,
-                align: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
               Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Account",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Category",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          AccountProvider.readAllAccount().then((accountList) {
-                            showModalBottomSheet<Account>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return BottomSheetWidget(
-                                  title: "Accounts",
-                                  listData: controller.homeController.accounts,
-                                );
-                              },
-                            ).then((selected) async {
-                              if (selected != null) {
-                                controller.updateAccount(selected);
-                              }
-                            });
-                          });
-                        },
-                        label: Obx(
-                          () => Text(
-                            controller.account.value!.name.toString(),
-                          ),
-                        ),
-                        icon: Obx(
-                          () => Text(
-                            controller.account.value!.emoji.toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          CategoryProvider.readAllCategory()
-                              .then((accountList) {
-                            showModalBottomSheet<Category>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return BottomSheetWidget(
-                                  title: "Categories",
-                                  listData:
-                                      controller.homeController.categories,
-                                );
-                              },
-                            ).then((selected) async {
-                              if (selected != null) {
-                                controller.updateCategory(selected);
-                              }
-                            });
-                          });
-                        },
-                        label: Obx(
-                          () => Text(
-                            controller.category.value!.name.toString(),
-                          ),
-                        ),
-                        icon: Obx(
-                          () => Text(
-                            controller.category.value!.emoji.toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: TypeConstant.values
+                children: TypeConstant.valuesWithTransfer
                     .map(
                       (String element) => Expanded(
                         child: Padding(
@@ -157,37 +53,76 @@ class RecordView extends GetView<RecordController> {
                     .toList(),
               ),
               const SizedBox(height: 10),
-              Row(
-                children: RuleConstant.values
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => ElevatedButton(
-                              onPressed: () {
-                                controller.updateRule(element);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  controller.rule.value == element
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              child: Text(element),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+              TextInputFieldWidget(
+                textEditingController: controller.amountController,
+                hint: record == null ? '0.0' : record!.amount.toString(),
+                type: TextInputType.number,
+                align: TextAlign.center,
               ),
               const SizedBox(height: 10),
               TextInputFieldWidget(
                 textEditingController: controller.noteController,
                 hint: record == null ? 'Note' : record!.note.toString(),
                 type: TextInputType.text,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "From",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "To",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+              const FromToWidget(),
+              const SizedBox(height: 10),
+              Obx(
+                () => Column(
+                  children: [
+                    if (controller.type.value == TypeConstant.debit)
+                      Row(
+                        children: RuleConstant.values
+                            .map(
+                              (String element) => Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Obx(
+                                    () => ElevatedButton(
+                                      onPressed: () {
+                                        controller.updateRule(element);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                          controller.rule.value == element
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                        ),
+                                      ),
+                                      child: Text(element),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -198,13 +133,17 @@ class RecordView extends GetView<RecordController> {
                       context: context,
                       firstDate: DateTime(DateTime.now().year - 1),
                       lastDate: DateTime(DateTime.now().year + 1),
-                      initialDate: DateTime.now(),
+                      initialDate: DateConstant.dateStringToDateTime(
+                          controller.dateTime.value),
                     ).then(
                       (date) {
                         if (date != null) {
                           showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.now(),
+                            initialTime: TimeOfDay.fromDateTime(
+                              DateConstant.dateStringToDateTime(
+                                  controller.dateTime.value),
+                            ),
                           ).then(
                             (time) {
                               if (time != null) {

@@ -7,7 +7,7 @@ class AccountProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.insert(
-      Account.tableName,
+      Account.TABLE_NAME,
       account.toJson(),
     );
   }
@@ -15,7 +15,7 @@ class AccountProvider {
   static Future<Account?> readAccountById(String id) async {
     var db = await DatabaseService().database;
     var data = await db.query(
-      Account.tableName,
+      Account.TABLE_NAME,
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -27,7 +27,7 @@ class AccountProvider {
 
   static Future<List<Account>> readAllAccount() async {
     var db = await DatabaseService().database;
-    var data = await db.query(Account.tableName, orderBy: 'id');
+    var data = await db.query(Account.TABLE_NAME, orderBy: 'id');
     return data.map((e) {
       return Account.fromJson(e);
     }).toList();
@@ -37,7 +37,7 @@ class AccountProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.update(
-      Account.tableName,
+      Account.TABLE_NAME,
       account.toJson(),
       where: 'id = ?',
       whereArgs: [account.id],
@@ -48,7 +48,7 @@ class AccountProvider {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.delete(
-      Account.tableName,
+      Account.TABLE_NAME,
       where: 'id = ?',
       whereArgs: [account.id],
     );

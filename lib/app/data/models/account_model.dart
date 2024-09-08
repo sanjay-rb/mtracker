@@ -1,5 +1,6 @@
 class Account {
-  static const tableName = "account";
+  static const TABLE_NAME = "account";
+
   String? id;
   String? name;
   String? emoji;

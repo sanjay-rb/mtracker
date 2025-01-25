@@ -28,6 +28,16 @@ class TransactionRecordProvider {
     }).toList();
   }
 
+  static Future<double> readTotalDebit() async {
+    var db = await DatabaseService().database;
+    List<Map<String, dynamic>> result = await db.rawQuery(
+        'SELECT SUM(amount) AS amount FROM ${TransactionRecord.TABLE_NAME}');
+    double totalAmount = result.isNotEmpty && result[0]['amount'] != null
+        ? result[0]['amount']
+        : 0.0;
+    return totalAmount;
+  }
+
   static Future updateRecord(TransactionRecord record) async {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;

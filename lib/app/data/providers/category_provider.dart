@@ -12,7 +12,11 @@ class CategoryProvider {
     );
   }
 
-  static Future<Category?> readCategoryById(String id) async {
+  static Category defaultCategory() {
+    return Category(id: "C20240903104201", name: "General", emoji: "📦");
+  }
+
+  static Future<Category> readCategoryById(String id) async {
     var db = await DatabaseService().database;
     var data = await db.query(
       Category.TABLE_NAME,
@@ -22,24 +26,12 @@ class CategoryProvider {
     if (data.isNotEmpty) {
       return Category.fromJson(data.first);
     }
-    return null;
+    return defaultCategory();
   }
 
   static Future<List<Category>> readAllCategory() async {
     var db = await DatabaseService().database;
     var data = await db.query(Category.TABLE_NAME);
-    return data.map((e) {
-      return Category.fromJson(e);
-    }).toList();
-  }
-
-  static Future<List<Category>> readCategoryByType(String type) async {
-    var db = await DatabaseService().database;
-    var data = await db.query(
-      Category.TABLE_NAME,
-      where: 'type = ?',
-      whereArgs: [type],
-    );
     return data.map((e) {
       return Category.fromJson(e);
     }).toList();

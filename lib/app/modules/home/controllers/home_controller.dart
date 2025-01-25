@@ -10,6 +10,7 @@ class HomeController extends GetxController {
   PageController pageController = PageController(initialPage: 0);
   var categories = <Category>[].obs;
   var records = <TransactionRecord>[].obs;
+  var totalDebit = 0.0.obs;
 
   @override
   Future<void> onInit() async {
@@ -30,5 +31,6 @@ class HomeController extends GetxController {
 
   Future<void> updateRecords() async {
     records.value = await TransactionRecordProvider.readCurrentMonthRecord();
+    totalDebit.value = await TransactionRecordProvider.readTotalDebit();
   }
 }

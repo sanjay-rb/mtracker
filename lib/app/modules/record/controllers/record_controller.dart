@@ -15,7 +15,7 @@ class RecordController extends GetxController {
   TextEditingController dateTimeController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  Rx<Category> category = Category().obs;
+  Rx<Category> category = CategoryProvider.defaultCategory().obs;
 
   @override
   Future<void> onInit() async {
@@ -27,11 +27,11 @@ class RecordController extends GetxController {
       dateTime.value = record.dateTime!;
 
       updateCategory(
-        (await CategoryProvider.readCategoryById(record.category!))!,
+        await CategoryProvider.readCategoryById(record.category!),
       );
     } else {
       dateTime.value = DateConstant.dateTimeToDateString(DateTime.now());
-      updateCategory((await CategoryProvider.readAllCategory()).first);
+      updateCategory(CategoryProvider.defaultCategory());
     }
     super.onInit();
   }
@@ -74,10 +74,12 @@ class RecordController extends GetxController {
     if (validateForm()) {
       TransactionRecord newObj = TransactionRecord(
         amount: double.parse(amountController.text),
-        category: category.value.id ?? "DEFAULT_TRANSFER_CATEGORY",
+        category: category.value.id,
         note: noteController.text,
-        dateTime: DateConstant.dateTimeToDateString(DateTime.now()),
+        dateTime: dateTime.value,
       );
+
+      debugPrint(newObj.toJson().toString());
 
       if (record != null) {
         newObj.id = record.id;
@@ -86,7 +88,6 @@ class RecordController extends GetxController {
         newObj.id = "R${DateConstant.generateID()}";
         await TransactionRecordProvider.createRecord(newObj);
       }
-
       Get.back(closeOverlays: true);
     }
   }

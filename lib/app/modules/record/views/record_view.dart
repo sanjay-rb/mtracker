@@ -19,105 +19,105 @@ class RecordView extends GetView<RecordController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: ListView(
+          child: Column(
             children: [
-              Text(
-                "💸 RECORD",
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const Divider(),
-              const SizedBox(height: 10),
-              TextInputFieldWidget(
-                textEditingController: controller.amountController,
-                hint: record == null ? '0.0' : record!.amount.toString(),
-                type: TextInputType.number,
-                align: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              TextInputFieldWidget(
-                textEditingController: controller.noteController,
-                hint: record == null ? 'Note' : record!.note.toString(),
-                type: TextInputType.text,
-              ),
-              const SizedBox(height: 10),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      CategoryProvider.readAllCategory().then((categories) {
-                        showModalBottomSheet<Category>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return BottomSheetWidget(
-                              title: "Categories",
-                              listData: categories,
-                            );
-                          },
-                        ).then((selected) async {
-                          if (selected != null) {
-                            controller.updateCategory(selected);
-                          }
-                        });
-                      });
-                    },
-                    label: Obx(
-                      () => Text(
-                        controller.category.value.name ?? "Category",
-                      ),
+                child: ListView(
+                  children: [
+                    Text(
+                      "💸 RECORD",
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
-                    icon: Obx(
-                      () => Text(
-                        controller.category.value.emoji ?? "📦",
-                      ),
+                    const Divider(),
+                    const SizedBox(height: 10),
+                    TextInputFieldWidget(
+                      textEditingController: controller.amountController,
+                      hint: record == null ? '0.0' : record!.amount.toString(),
+                      type: TextInputType.number,
+                      align: TextAlign.center,
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime(DateTime.now().year - 1),
-                      lastDate: DateTime(DateTime.now().year + 1),
-                      initialDate: DateConstant.dateStringToDateTime(
-                          controller.dateTime.value),
-                    ).then(
-                      (date) {
-                        if (date != null) {
-                          showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(
-                              DateConstant.dateStringToDateTime(
-                                  controller.dateTime.value),
-                            ),
-                          ).then(
-                            (time) {
-                              if (time != null) {
-                                DateTime dateTime = DateTime(
-                                  date.year,
-                                  date.month,
-                                  date.day,
-                                  time.hour,
-                                  time.minute,
+                    const SizedBox(height: 10),
+                    TextInputFieldWidget(
+                      textEditingController: controller.noteController,
+                      hint: record == null ? 'Note' : record!.note.toString(),
+                      type: TextInputType.text,
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          CategoryProvider.readAllCategory().then((categories) {
+                            showModalBottomSheet<Category>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return BottomSheetWidget(
+                                  title: "Categories",
+                                  listData: categories,
                                 );
-                                controller.updateDateTime(dateTime);
+                              },
+                            ).then((selected) async {
+                              if (selected != null) {
+                                controller.updateCategory(selected);
+                              }
+                            });
+                          });
+                        },
+                        label: Obx(
+                          () => Text(controller.category.value.name!),
+                        ),
+                        icon: Obx(
+                          () => Text(controller.category.value.emoji!),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            firstDate: DateTime(DateTime.now().year - 1),
+                            lastDate: DateTime(DateTime.now().year + 1),
+                            initialDate: DateConstant.dateStringToDateTime(
+                                controller.dateTime.value),
+                          ).then(
+                            (date) {
+                              if (date != null) {
+                                showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.fromDateTime(
+                                    DateConstant.dateStringToDateTime(
+                                        controller.dateTime.value),
+                                  ),
+                                ).then(
+                                  (time) {
+                                    if (time != null) {
+                                      DateTime dateTime = DateTime(
+                                        date.year,
+                                        date.month,
+                                        date.day,
+                                        time.hour,
+                                        time.minute,
+                                      );
+                                      controller.updateDateTime(dateTime);
+                                    }
+                                  },
+                                );
                               }
                             },
                           );
-                        }
-                      },
-                    );
-                  },
-                  label: Obx(
-                    () => Text(controller.dateTime.value),
-                  ),
-                  icon: const Icon(Icons.access_time),
+                        },
+                        label: Obx(
+                          () => Text(controller.dateTime.value),
+                        ),
+                        icon: const Icon(Icons.access_time),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
               Row(
                 children: [
                   if (record != null)

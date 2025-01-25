@@ -26,12 +26,14 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                   ),
-                  Text(
-                    "₹ 0.00",
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Obx(
+                    () => Text(
+                      "₹ ${controller.totalDebit}",
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ],
               ),

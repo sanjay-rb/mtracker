@@ -50,10 +50,9 @@ class DatabaseService extends GetxService {
 
     db.rawInsert('''
       INSERT INTO [category] ([id], [name], [emoji])
-      VALUES ('C20240903104202', 'Food', '🍔'),
-        ('C20240903104203', 'Grocery', '🛒'),
-        ('C20240903104204', 'Gold', '💰'),
-        ('C20240903104205', 'Stocks', '📈');
+      VALUES ('C20240903104201', 'General', '📦'),
+        ('C20240903104202', 'Food', '🍔'),
+        ('C20240903104203', 'Shopping', '🛍️');
     ''');
   }
 }

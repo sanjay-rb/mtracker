@@ -25,13 +25,7 @@ class DatabaseService extends GetxService {
       version: 1,
       onCreate: (db, version) async {
         db.execute("""
-          CREATE TABLE [category] (
-            [id] TEXT,
-            [name] TEXT,
-            [emoji] TEXT,
-            [rule] TEXT NULL,
-            [type] TEXT
-          );
+          CREATE TABLE [category] ([id] TEXT, [name] TEXT, [emoji] TEXT);
         """);
 
         db.execute("""
@@ -55,22 +49,11 @@ class DatabaseService extends GetxService {
     db.delete(TransactionRecord.TABLE_NAME);
 
     db.rawInsert('''
-      INSERT INTO [account] ([id], [name], [emoji], [balance])
-      VALUES ('A20240903104201', 'Primary Account', '🏦', 0),
-        ('A20240903104202', 'Secondary Account', '🏦', 0),
-        ('A20240903104203', 'Wallet', '👛', 0),
-        ('A20240903104204', 'Primary Credit Card', '💳', 0),
-        ('A20240903104205', 'Secondary Credit Card', '💳', 0);
-    ''');
-
-    db.rawInsert('''
-      INSERT INTO [category] ([id], [name], [emoji], [rule], [type])
-      VALUES ('C20240903104201', 'Salary', '💵', 'NR', 'CREDIT'),
-        ('C20240903104202', 'Food', '🍔', 'WANTS', 'DEBIT'),
-        ('C20240903104203', 'Grocery', '🛒', 'NEEDS', 'DEBIT'),
-        ('C20240903104204', 'Gold', '💰', 'SAVES', 'DEBIT'),
-        ('C20240903104205', 'Stocks', '📈', 'SAVES', 'DEBIT'),
-        ('DEFAULT_TRANSFER_CATEGORY', 'Transfer', '🔃', 'NR', 'TRANSFER');
+      INSERT INTO [category] ([id], [name], [emoji])
+      VALUES ('C20240903104202', 'Food', '🍔'),
+        ('C20240903104203', 'Grocery', '🛒'),
+        ('C20240903104204', 'Gold', '💰'),
+        ('C20240903104205', 'Stocks', '📈');
     ''');
   }
 }

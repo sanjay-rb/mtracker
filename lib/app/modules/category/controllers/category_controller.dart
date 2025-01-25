@@ -16,8 +16,6 @@ class CategoryController extends GetxController {
       Category category = Get.arguments as Category;
       emojiController.text = category.emoji!;
       nameController.text = category.name!;
-      updateType(category.type!);
-      updateRule(category.rule!);
     }
     super.onInit();
   }

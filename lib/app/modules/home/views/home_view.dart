@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
@@ -20,8 +19,16 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Get.toNamed(Routes.RECORD, arguments: null);
-          controller.updateRecords();
+          if (controller.bottomNavBarIndex.value == 0) {
+            await Get.toNamed(Routes.RECORD, arguments: null);
+            controller.updateRecords();
+          } else {
+            await Get.toNamed(
+              Routes.CATEGORY,
+              arguments: null,
+            );
+            controller.updateCategories();
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -136,25 +143,9 @@ class HomeView extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "CATEGORIES",
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                          const Spacer(),
-                          ElevatedButton.icon(
-                            onPressed: () async {
-                              await Get.toNamed(
-                                Routes.CATEGORY,
-                                arguments: null,
-                              );
-                              controller.updateCategories();
-                            },
-                            label: const Text("Add"),
-                            icon: const Icon(Icons.add),
-                          ),
-                        ],
+                      Text(
+                        "CATEGORIES",
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const Divider(),
                       const Row(
@@ -203,26 +194,11 @@ class HomeView extends GetView<HomeController> {
                                               .headlineLarge,
                                         ),
                                         const SizedBox(height: 10),
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              category.type ==
-                                                      TypeConstant.credit
-                                                  ? const TextSpan(text: "🟢")
-                                                  : const TextSpan(),
-                                              category.type ==
-                                                      TypeConstant.debit
-                                                  ? const TextSpan(text: "🔴")
-                                                  : const TextSpan(),
-                                              const TextSpan(text: " "),
-                                              TextSpan(
-                                                text: category.name.toString(),
-                                              ),
-                                            ],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
-                                          ),
+                                        Text(
+                                          category.name.toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                       ],
                                     ),

@@ -8,8 +8,7 @@ class TransactionRecord {
   String? category;
   String? dateTime;
 
-  // ignore: non_constant_identifier_names
-  static String TABLE_NAME = "transaction_record";
+  static const TABLE_NAME = "transaction_record";
 
   TransactionRecord(
       {this.id, this.amount, this.note, this.category, this.dateTime});

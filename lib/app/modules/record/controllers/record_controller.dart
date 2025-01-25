@@ -42,15 +42,6 @@ class RecordController extends GetxController {
 
   void updateCategory(Category selected) {
     category.value = selected;
-    if (selected.id != null) {
-      updateRule(selected.rule!);
-    } else {
-      updateRule(RuleConstant.nr);
-    }
-  }
-
-  void updateRule(String element) {
-    rule.value = element;
   }
 
   bool validateForm() {

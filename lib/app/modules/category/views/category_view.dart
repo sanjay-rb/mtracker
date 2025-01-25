@@ -170,8 +170,6 @@ class CategoryView extends GetView<CategoryController> {
                             Category newCategoryObj = Category(
                               name: controller.nameController.text,
                               emoji: controller.emojiController.text,
-                              type: controller.type.value,
-                              rule: controller.rule.value,
                             );
                             if (category != null) {
                               newCategoryObj.id = category!.id;

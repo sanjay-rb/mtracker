@@ -57,8 +57,8 @@ class ThemeService {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: accent,
-        selectedItemColor: onAccent,
-        unselectedItemColor: primary,
+        selectedItemColor: primary,
+        unselectedItemColor: onAccent,
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(

@@ -1,37 +1,22 @@
 [
     {
-        "id": "C20240903104201",
-        "name": "Salary",
-        "emoji": "💵",
-        "rule": "NR",
-        "type": "CREDIT"
-    },
-    {
         "id": "C20240903104202",
         "name": "Food",
-        "emoji": "🍔",
-        "rule": "WANTS",
-        "type": "DEBIT"
+        "emoji": "🍔"
     },
     {
         "id": "C20240903104203",
         "name": "Grocery",
-        "emoji": "🛒",
-        "rule": "NEEDS",
-        "type": "DEBIT"
+        "emoji": "🛒"
     },
     {
         "id": "C20240903104204",
         "name": "Gold",
-        "emoji": "💰",
-        "rule": "SAVES",
-        "type": "DEBIT"
+        "emoji": "💰"
     },
     {
         "id": "C20240903104205",
         "name": "Stocks",
-        "emoji": "📈",
-        "rule": "SAVES",
-        "type": "DEBIT"
+        "emoji": "📈"
     }
 ]

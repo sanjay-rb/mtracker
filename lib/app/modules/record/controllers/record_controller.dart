@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
@@ -13,8 +11,6 @@ class RecordController extends GetxController {
   HomeController homeController = Get.find<HomeController>();
 
   TextEditingController amountController = TextEditingController();
-  Rx<String> type = TypeConstant.debit.obs;
-  Rx<String> rule = RuleConstant.nr.obs;
   Rx<String> dateTime = "".obs;
   TextEditingController dateTimeController = TextEditingController();
   TextEditingController noteController = TextEditingController();

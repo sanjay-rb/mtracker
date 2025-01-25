@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 
 class CategoryController extends GetxController {
   TextEditingController emojiController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  Rx<String> type = TypeConstant.debit.obs;
-  Rx<String> rule = RuleConstant.nr.obs;
 
   @override
   void onInit() {
@@ -18,17 +14,6 @@ class CategoryController extends GetxController {
       nameController.text = category.name!;
     }
     super.onInit();
-  }
-
-  void updateType(String element) {
-    type.value = element;
-    if (element == TypeConstant.credit) {
-      rule.value = RuleConstant.nr;
-    }
-  }
-
-  void updateRule(String element) {
-    rule.value = element;
   }
 
   validateForm() {

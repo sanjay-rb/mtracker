@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
 import 'package:mtracker/app/widgets/text_input_field_widget.dart';
@@ -48,92 +46,6 @@ class CategoryView extends GetView<CategoryController> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: TypeConstant.values
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => ElevatedButton(
-                              onPressed: () {
-                                controller.updateType(element);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  controller.type.value == element
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              child: Text(
-                                element,
-                                style: TextStyle(
-                                  color: controller.type.value == element
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(height: 20),
-              Obx(
-                () => Column(
-                  children: [
-                    if (controller.type.value == TypeConstant.debit)
-                      Row(
-                        children: RuleConstant.values
-                            .map(
-                              (String element) => Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Obx(
-                                    () => ElevatedButton(
-                                      onPressed: () {
-                                        controller.updateRule(element);
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                          controller.rule.value == element
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                        ),
-                                      ),
-                                      child: Text(
-                                        element,
-                                        style: TextStyle(
-                                          color:
-                                              controller.rule.value == element
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .onSecondary,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                  ],
-                ),
               ),
               const SizedBox(height: 20),
               Row(

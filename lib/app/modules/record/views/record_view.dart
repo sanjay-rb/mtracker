@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
-import 'package:mtracker/app/constants/rule_constant.dart';
-import 'package:mtracker/app/constants/type_constant.dart';
+import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
+import 'package:mtracker/app/data/providers/category_provider.dart';
+import 'package:mtracker/app/widgets/bottom_sheet_widget.dart';
 import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 
 import '../controllers/record_controller.dart';
@@ -25,30 +26,6 @@ class RecordView extends GetView<RecordController> {
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const Divider(),
-              Row(
-                children: TypeConstant.valuesWithTransfer
-                    .map(
-                      (String element) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Obx(
-                            () => ElevatedButton(
-                              onPressed: () {},
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  controller.type.value == element
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              child: Text(element),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
               const SizedBox(height: 10),
               TextInputFieldWidget(
                 textEditingController: controller.amountController,
@@ -63,61 +40,40 @@ class RecordView extends GetView<RecordController> {
                 type: TextInputType.text,
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "From",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      CategoryProvider.readAllCategory().then((categories) {
+                        showModalBottomSheet<Category>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return BottomSheetWidget(
+                              title: "Categories",
+                              listData: categories,
+                            );
+                          },
+                        ).then((selected) async {
+                          if (selected != null) {
+                            controller.updateCategory(selected);
+                          }
+                        });
+                      });
+                    },
+                    label: Obx(
+                      () => Text(
+                        controller.category.value.name ?? "Category",
+                      ),
+                    ),
+                    icon: Obx(
+                      () => Text(
+                        controller.category.value.emoji ?? "📦",
+                      ),
                     ),
                   ),
-                  Expanded(
-                    child: Text(
-                      "To",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              Obx(
-                () => Column(
-                  children: [
-                    if (controller.type.value == TypeConstant.debit)
-                      Row(
-                        children: RuleConstant.values
-                            .map(
-                              (String element) => Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Obx(
-                                    () => ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                          controller.rule.value == element
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                        ),
-                                      ),
-                                      child: Text(element),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                  ],
                 ),
               ),
-              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton.icon(

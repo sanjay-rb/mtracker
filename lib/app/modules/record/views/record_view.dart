@@ -5,7 +5,6 @@ import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/rule_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
-import 'package:mtracker/app/widgets/from_to_widget.dart';
 import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 
 import '../controllers/record_controller.dart';
@@ -84,8 +83,6 @@ class RecordView extends GetView<RecordController> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
-              const FromToWidget(),
               const SizedBox(height: 10),
               Obx(
                 () => Column(

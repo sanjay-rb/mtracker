@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mtracker/app/modules/account/controllers/account_controller.dart';
 
-class TextInputFieldWidget extends GetWidget<AccountController> {
+class TextInputFieldWidget extends GetWidget {
   const TextInputFieldWidget({
     super.key,
     required this.textEditingController,

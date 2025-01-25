@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mtracker/app/constants/date_constant.dart';
 import 'package:mtracker/app/constants/type_constant.dart';
-import 'package:mtracker/app/data/models/account_model.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:mtracker/app/data/providers/category_provider.dart';
@@ -33,10 +32,6 @@ class HomeView extends GetView<HomeController> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_balance),
-              label: "Accounts",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.category),
@@ -74,7 +69,6 @@ class HomeView extends GetView<HomeController> {
                               DatabaseService service = DatabaseService();
                               var db = await service.database;
                               await service.resetDatabase(db);
-                              controller.updateAccounts();
                               controller.updateCategories();
                               controller.updateRecords();
                             },
@@ -134,95 +128,6 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ],
                   )
-                ],
-              ),
-              ListView(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "ACCOUNTS",
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                          const Spacer(),
-                          ElevatedButton.icon(
-                            onPressed: () async {
-                              await Get.toNamed(
-                                Routes.ACCOUNT,
-                                arguments: null,
-                              );
-                              controller.updateAccounts();
-                            },
-                            label: const Text("Add"),
-                            icon: const Icon(Icons.add),
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Click to edit the items"),
-                          SizedBox(width: 5),
-                          Icon(Icons.edit)
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                            controller.accounts.length,
-                            (index) {
-                              Account account = controller.accounts[index];
-                              return InkWell(
-                                onTap: () async {
-                                  await Get.toNamed(
-                                    Routes.ACCOUNT,
-                                    arguments: account,
-                                  );
-                                  controller.updateAccounts();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        account.emoji.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineLarge,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        account.name.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        "₹ ${account.balance}",
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
               ListView(
@@ -361,7 +266,6 @@ class RecordListTileWidget extends GetWidget<HomeController> {
             arguments: record,
           );
           controller.updateRecords();
-          controller.updateAccounts();
         },
         child: FutureBuilder(
           future: CategoryProvider.readCategoryById(record.category!),

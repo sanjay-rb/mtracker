@@ -26,14 +26,12 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                   ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.totalCredit}",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
+                  Text(
+                    "₹ 0.00",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),
@@ -56,14 +54,12 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                   ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.needs}",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                    ),
+                  Text(
+                    "₹ 0.00",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                 ],
               ),
@@ -86,14 +82,12 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                   ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.wants}",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                    ),
+                  Text(
+                    "₹ 0.00",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                 ],
               ),
@@ -116,14 +110,12 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                   ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.saves}",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                    ),
+                  Text(
+                    "₹ 0.00",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                 ],
               ),
@@ -146,14 +138,12 @@ class BucketBudgetWidget extends GetWidget<HomeController> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                   ),
-                  Obx(
-                    () => Text(
-                      "₹ ${controller.bucket.value!.totalDebit}",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
+                  Text(
+                    "₹ 0.00",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),

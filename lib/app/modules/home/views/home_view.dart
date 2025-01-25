@@ -23,7 +23,6 @@ class HomeView extends GetView<HomeController> {
         onPressed: () async {
           await Get.toNamed(Routes.RECORD, arguments: null);
           controller.updateRecords();
-          controller.updateBuckets();
         },
         child: const Icon(Icons.add),
       ),
@@ -76,7 +75,6 @@ class HomeView extends GetView<HomeController> {
                               var db = await service.database;
                               await service.resetDatabase(db);
                               controller.updateAccounts();
-                              controller.updateBuckets();
                               controller.updateCategories();
                               controller.updateRecords();
                             },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mtracker/app/data/models/account_model.dart';
-import 'package:mtracker/app/data/models/budget_bucket_model.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/models/transaction_record_model.dart';
 import 'package:path/path.dart';
@@ -26,17 +25,6 @@ class DatabaseService extends GetxService {
       dbPath,
       version: 1,
       onCreate: (db, version) async {
-        db.execute("""
-          CREATE TABLE [budget_bucket] (
-            [id] TEXT,
-            [year_month] TEXT,
-            [total_credit] REAL,
-            [needs] REAL,
-            [wants] REAL,
-            [saves] REAL,
-            [total_debit] REAL
-          );
-        """);
 
         db.execute("""
           CREATE TABLE [account] (
@@ -80,7 +68,6 @@ class DatabaseService extends GetxService {
   resetDatabase(Database db) async {
     db.delete(Account.TABLE_NAME);
     db.delete(Category.TABLE_NAME);
-    db.delete(BudgetBucket.TABLE_NAME);
     db.delete(TransactionRecord.TABLE_NAME);
 
     db.rawInsert('''

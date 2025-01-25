@@ -335,11 +335,7 @@ class RecordListTileWidget extends GetWidget<HomeController> {
                           "₹ ${record.amount}",
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: record.type! == TypeConstant.credit
-                                        ? Colors.green
-                                        : record.type! == TypeConstant.debit
-                                            ? Colors.red
-                                            : Colors.blue,
+                                    color: Colors.blue,
                                     fontWeight: FontWeight.bold,
                                   ),
                           textAlign: TextAlign.end,

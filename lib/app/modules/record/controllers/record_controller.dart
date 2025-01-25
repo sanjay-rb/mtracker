@@ -30,7 +30,6 @@ class RecordController extends GetxController {
       noteController.text = record.note!;
       dateTime.value = record.dateTime!;
 
-      updateType(record.type!);
       updateCategory(
         (await CategoryProvider.readCategoryById(record.category!))!,
       );
@@ -47,23 +46,6 @@ class RecordController extends GetxController {
       updateRule(selected.rule!);
     } else {
       updateRule(RuleConstant.nr);
-    }
-  }
-
-  Future<void> updateType(String element) async {
-    type.value = element;
-    if (element == TypeConstant.transfer) {
-      updateCategory(
-        Category(
-          id: "DEFAULT_TRANSFER_CATEGORY",
-          emoji: "🔃",
-          name: "Transfer",
-          rule: RuleConstant.nr,
-          type: element,
-        ),
-      );
-    } else {
-      updateCategory(Category());
     }
   }
 
@@ -104,13 +86,9 @@ class RecordController extends GetxController {
   Future<void> saveRecord(TransactionRecord? record) async {
     if (validateForm()) {
       TransactionRecord newObj = TransactionRecord(
-        sourceAccount: "NR",
-        targetAccount: "NR",
         amount: double.parse(amountController.text),
         category: category.value.id ?? "DEFAULT_TRANSFER_CATEGORY",
         note: noteController.text,
-        rule: rule.value,
-        type: type.value,
         dateTime: DateConstant.dateTimeToDateString(DateTime.now()),
       );
 
@@ -120,7 +98,6 @@ class RecordController extends GetxController {
       } else {
         newObj.id = "R${DateConstant.generateID()}";
         await TransactionRecordProvider.createRecord(newObj);
-        if (newObj.type == TypeConstant.debit) {}
       }
 
       Get.back(closeOverlays: true);

@@ -33,9 +33,7 @@ class RecordView extends GetView<RecordController> {
                           padding: const EdgeInsets.all(2.0),
                           child: Obx(
                             () => ElevatedButton(
-                              onPressed: () {
-                                controller.updateType(element);
-                              },
+                              onPressed: () {},
                               style: ButtonStyle(
                                 backgroundColor: WidgetStatePropertyAll(
                                   controller.type.value == element

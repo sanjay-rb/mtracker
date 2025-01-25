@@ -37,13 +37,9 @@ class DatabaseService extends GetxService {
         db.execute("""
           CREATE TABLE [transaction_record] (
               [id] TEXT,
-              [type] TEXT,
               [amount] REAL,
               [note] TEXT,
-              [source_account] TEXT,
-              [target_account] TEXT,
               [category] TEXT,
-              [rule] TEXT,
               [date_time] TEXT
           );
         """);

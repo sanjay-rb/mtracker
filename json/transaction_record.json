@@ -1,35 +1,23 @@
 [
     {
         "id": "R20240908225214",
-        "type": "DEBIT",
         "amount": 10.0,
         "note": "test",
-        "source_account": "A20240903104201",
-        "target_account": null,
         "category": "C20240903104202",
-        "rule": "WANTS",
         "date_time": "08-09-2024 10: 52 PM"
     },
     {
         "id": "R20240908225349",
-        "type": "CREDIT",
         "amount": 10.0,
         "note": "test",
-        "source_account": null,
-        "target_account": "A20240903104201",
         "category": "C20240903104201",
-        "rule": "NR",
         "date_time": "08-09-2024 10:53 PM"
     },
     {
         "id": "R20240908225509",
-        "type": "TRANSFER",
         "amount": 10.0,
         "note": "test",
-        "source_account": "A20240903104201",
-        "target_account": "A20240903104202",
         "category": null,
-        "rule": "NR",
         "date_time": "08-09-2024 10:55 PM"
     }
 ]

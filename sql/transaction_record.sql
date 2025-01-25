@@ -1,23 +1,15 @@
 CREATE TABLE [transaction_record] (
     [id] TEXT,
-    [type] TEXT,
     [amount] REAL,
     [note] TEXT,
-    [source_account] TEXT,
-    [target_account] TEXT,
     [category] TEXT,
-    [rule] TEXT,
     [date_time] TEXT
 );
 INSERT INTO [transaction_record] (
         [id],
-        [type],
         [amount],
         [note],
-        [source_account],
-        [target_account],
         [category],
-        [rule],
         [date_time]
     )
 VALUES (

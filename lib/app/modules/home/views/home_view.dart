@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
+import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 import 'package:mtracker/app/routes/app_pages.dart';
 import 'package:mtracker/app/services/database_service.dart';
 import 'package:mtracker/app/widgets/bucket_budget_widget.dart';
@@ -20,6 +21,7 @@ class HomeView extends GetView<HomeController> {
           if (controller.bottomNavBarIndex.value == 0) {
             await Get.toNamed(Routes.RECORD, arguments: null);
             controller.updateRecords();
+            controller.updateCategories();
           } else {
             await Get.toNamed(
               Routes.CATEGORY,
@@ -160,7 +162,7 @@ class HomeView extends GetView<HomeController> {
                             children: List.generate(
                               controller.categories.length,
                               (index) {
-                                Category category =
+                                CategoryModel category =
                                     controller.categories[index];
                                 return InkWell(
                                   onTap: () async {
@@ -178,16 +180,24 @@ class HomeView extends GetView<HomeController> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          category.emoji.toString(),
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineLarge,
-                                        ),
+                                        FutureBuilder<double>(
+                                            future: TransactionRecordProvider
+                                                .readTotalDebitByCategory(
+                                                    category),
+                                            builder: (context, snapshot) {
+                                              double total =
+                                                  snapshot.data ?? 0.0;
+                                              return Text(
+                                                total.toString(),
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineLarge,
+                                              );
+                                            }),
                                         const SizedBox(height: 10),
                                         Text(
-                                          category.name.toString(),
+                                          "${category.emoji} ${category.name}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge,

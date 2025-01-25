@@ -9,7 +9,7 @@ import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 import '../controllers/category_controller.dart';
 
 class CategoryView extends GetView<CategoryController> {
-  final Category? category;
+  final CategoryModel? category;
   const CategoryView(this.category, {super.key});
   @override
   Widget build(BuildContext context) {
@@ -17,37 +17,42 @@ class CategoryView extends GetView<CategoryController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: ListView(
+          child: Column(
             children: [
-              Text(
-                category == null
-                    ? "➕ ADD CATEGORY"
-                    : "${category!.emoji} ${category!.name!.toUpperCase()}",
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const Divider(),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: TextInputFieldWidget(
-                      textEditingController: controller.emojiController,
-                      hint: category == null ? 'Emoji' : category!.emoji!,
-                      type: TextInputType.text,
-                      align: TextAlign.center,
+              Expanded(
+                child: ListView(
+                  children: [
+                    Text(
+                      category == null
+                          ? "➕ ADD CATEGORY"
+                          : "${category!.emoji} ${category!.name!.toUpperCase()}",
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: TextInputFieldWidget(
-                      textEditingController: controller.nameController,
-                      hint: category == null ? 'Name' : category!.name!,
-                      type: TextInputType.text,
+                    const Divider(),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: TextInputFieldWidget(
+                            textEditingController: controller.emojiController,
+                            hint: category == null ? 'Emoji' : category!.emoji!,
+                            type: TextInputType.text,
+                            align: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: TextInputFieldWidget(
+                            textEditingController: controller.nameController,
+                            hint: category == null ? 'Name' : category!.name!,
+                            type: TextInputType.text,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
               Row(
                 children: [
                   if (category != null)
@@ -79,7 +84,7 @@ class CategoryView extends GetView<CategoryController> {
                         label: const Text("SAVE"),
                         onPressed: () async {
                           if (controller.validateForm()) {
-                            Category newCategoryObj = Category(
+                            CategoryModel newCategoryObj = CategoryModel(
                               name: controller.nameController.text,
                               emoji: controller.emojiController.text,
                             );

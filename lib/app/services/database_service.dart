@@ -45,8 +45,8 @@ class DatabaseService extends GetxService {
   }
 
   resetDatabase(Database db) async {
-    db.delete(Category.TABLE_NAME);
-    db.delete(TransactionRecord.TABLE_NAME);
+    db.delete(CategoryModel.TABLE_NAME);
+    db.delete(TransactionRecordModel.TABLE_NAME);
 
     db.rawInsert('''
       INSERT INTO [category] ([id], [name], [emoji])

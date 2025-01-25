@@ -3,56 +3,56 @@ import 'package:mtracker/app/services/database_service.dart';
 import '../models/category_model.dart';
 
 class CategoryProvider {
-  static Future createCategory(Category category) async {
+  static Future createCategory(CategoryModel category) async {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.insert(
-      Category.TABLE_NAME,
+      CategoryModel.TABLE_NAME,
       category.toJson(),
     );
   }
 
-  static Category defaultCategory() {
-    return Category(id: "C20240903104201", name: "General", emoji: "📦");
+  static CategoryModel defaultCategory() {
+    return CategoryModel(id: "C20240903104201", name: "General", emoji: "📦");
   }
 
-  static Future<Category> readCategoryById(String id) async {
+  static Future<CategoryModel> readCategoryById(String id) async {
     var db = await DatabaseService().database;
     var data = await db.query(
-      Category.TABLE_NAME,
+      CategoryModel.TABLE_NAME,
       where: 'id = ?',
       whereArgs: [id],
     );
     if (data.isNotEmpty) {
-      return Category.fromJson(data.first);
+      return CategoryModel.fromJson(data.first);
     }
     return defaultCategory();
   }
 
-  static Future<List<Category>> readAllCategory() async {
+  static Future<List<CategoryModel>> readAllCategory() async {
     var db = await DatabaseService().database;
-    var data = await db.query(Category.TABLE_NAME);
+    var data = await db.query(CategoryModel.TABLE_NAME);
     return data.map((e) {
-      return Category.fromJson(e);
+      return CategoryModel.fromJson(e);
     }).toList();
   }
 
-  static Future updateCategory(Category category) async {
+  static Future updateCategory(CategoryModel category) async {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.update(
-      Category.TABLE_NAME,
+      CategoryModel.TABLE_NAME,
       category.toJson(),
       where: 'id = ?',
       whereArgs: [category.id],
     );
   }
 
-  static Future deleteCategory(Category category) async {
+  static Future deleteCategory(CategoryModel category) async {
     DatabaseService databaseService = DatabaseService();
     var db = await databaseService.database;
     await db.delete(
-      Category.TABLE_NAME,
+      CategoryModel.TABLE_NAME,
       where: 'id = ?',
       whereArgs: [category.id],
     );

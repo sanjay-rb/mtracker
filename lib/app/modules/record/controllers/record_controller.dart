@@ -15,12 +15,12 @@ class RecordController extends GetxController {
   TextEditingController dateTimeController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  Rx<Category> category = CategoryProvider.defaultCategory().obs;
+  Rx<CategoryModel> category = CategoryProvider.defaultCategory().obs;
 
   @override
   Future<void> onInit() async {
     if (Get.arguments != null) {
-      TransactionRecord record = Get.arguments as TransactionRecord;
+      TransactionRecordModel record = Get.arguments as TransactionRecordModel;
 
       amountController.text = record.amount.toString();
       noteController.text = record.note!;
@@ -36,7 +36,7 @@ class RecordController extends GetxController {
     super.onInit();
   }
 
-  void updateCategory(Category selected) {
+  void updateCategory(CategoryModel selected) {
     category.value = selected;
   }
 
@@ -70,9 +70,9 @@ class RecordController extends GetxController {
     dateTime.value = DateConstant.dateTimeToDateString(value);
   }
 
-  Future<void> saveRecord(TransactionRecord? record) async {
+  Future<void> saveRecord(TransactionRecordModel? record) async {
     if (validateForm()) {
-      TransactionRecord newObj = TransactionRecord(
+      TransactionRecordModel newObj = TransactionRecordModel(
         amount: double.parse(amountController.text),
         category: category.value.id,
         note: noteController.text,
@@ -92,7 +92,7 @@ class RecordController extends GetxController {
     }
   }
 
-  Future<void> deleteRecord(TransactionRecord? record) async {
+  Future<void> deleteRecord(TransactionRecordModel? record) async {
     await TransactionRecordProvider.deleteRecord(record!);
     Get.back();
   }

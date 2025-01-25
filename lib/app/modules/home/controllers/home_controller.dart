@@ -8,8 +8,8 @@ import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 class HomeController extends GetxController {
   var bottomNavBarIndex = 0.obs;
   PageController pageController = PageController(initialPage: 0);
-  var categories = <Category>[].obs;
-  var records = <TransactionRecord>[].obs;
+  var categories = <CategoryModel>[].obs;
+  var records = <TransactionRecordModel>[].obs;
   var totalDebit = 0.0.obs;
 
   @override

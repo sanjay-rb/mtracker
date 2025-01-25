@@ -37,7 +37,7 @@ class RecordListTileWidget extends GetWidget<HomeController> {
                 padding: const EdgeInsets.all(2.0),
                 child: Center(
                   child: Obx(
-                    () => FutureBuilder<Category>(
+                    () => FutureBuilder<CategoryModel>(
                       future: CategoryProvider.readCategoryById(
                           controller.records[index].category!),
                       builder: (context, snapshot) {
@@ -47,7 +47,7 @@ class RecordListTileWidget extends GetWidget<HomeController> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                        Category category = snapshot.data!;
+                        CategoryModel category = snapshot.data!;
                         return Text(
                           '${category.emoji}',
                           textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class RecordListTileWidget extends GetWidget<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(
-                      () => FutureBuilder<Category>(
+                      () => FutureBuilder<CategoryModel>(
                         future: CategoryProvider.readCategoryById(
                             controller.records[index].category!),
                         builder: (context, snapshot) {
@@ -77,7 +77,7 @@ class RecordListTileWidget extends GetWidget<HomeController> {
                               child: CircularProgressIndicator(),
                             );
                           }
-                          Category category = snapshot.data!;
+                          CategoryModel category = snapshot.data!;
                           return Text(
                             "${category.name}",
                             style: Theme.of(context)

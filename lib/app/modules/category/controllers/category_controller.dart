@@ -9,7 +9,7 @@ class CategoryController extends GetxController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      Category category = Get.arguments as Category;
+      CategoryModel category = Get.arguments as CategoryModel;
       emojiController.text = category.emoji!;
       nameController.text = category.name!;
     }

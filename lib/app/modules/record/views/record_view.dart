@@ -11,7 +11,7 @@ import 'package:mtracker/app/widgets/text_input_field_widget.dart';
 import '../controllers/record_controller.dart';
 
 class RecordView extends GetView<RecordController> {
-  final TransactionRecord? record;
+  final TransactionRecordModel? record;
   const RecordView(this.record, {super.key});
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class RecordView extends GetView<RecordController> {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           CategoryProvider.readAllCategory().then((categories) {
-                            showModalBottomSheet<Category>(
+                            showModalBottomSheet<CategoryModel>(
                               context: context,
                               builder: (BuildContext context) {
                                 return BottomSheetWidget(

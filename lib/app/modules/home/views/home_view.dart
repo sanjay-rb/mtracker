@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:mtracker/app/data/models/category_model.dart';
 import 'package:mtracker/app/data/providers/transaction_record_provider.dart';
 import 'package:mtracker/app/routes/app_pages.dart';
-import 'package:mtracker/app/services/database_service.dart';
 import 'package:mtracker/app/widgets/bucket_budget_widget.dart';
 import 'package:mtracker/app/widgets/record_list_tile_widget.dart';
 
@@ -73,11 +72,10 @@ class HomeView extends GetView<HomeController> {
                           const Spacer(),
                           IconButton.filled(
                             onPressed: () async {
-                              DatabaseService service = DatabaseService();
-                              var db = await service.database;
-                              await service.resetDatabase(db);
-                              controller.updateCategories();
+                              await Get.toNamed(Routes.SETTINGS,
+                                  arguments: null);
                               controller.updateRecords();
+                              controller.updateCategories();
                             },
                             icon: const Icon(Icons.settings),
                           ),

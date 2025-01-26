@@ -1,3 +1,7 @@
 import 'package:get/get.dart';
 
-class SettingsController extends GetxController {}
+class SettingsController extends GetxController {
+  void updateCategories() {}
+
+  void updateRecords() {}
+}

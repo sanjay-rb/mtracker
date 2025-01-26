@@ -81,7 +81,8 @@ class RecordView extends GetView<RecordController> {
                             firstDate: DateTime(DateTime.now().year - 1),
                             lastDate: DateTime(DateTime.now().year + 1),
                             initialDate: DateConstant.dateStringToDateTime(
-                                controller.dateTime.value),
+                              controller.dateTime.value,
+                            ),
                           ).then(
                             (date) {
                               if (date != null) {
@@ -89,7 +90,8 @@ class RecordView extends GetView<RecordController> {
                                   context: context,
                                   initialTime: TimeOfDay.fromDateTime(
                                     DateConstant.dateStringToDateTime(
-                                        controller.dateTime.value),
+                                      controller.dateTime.value,
+                                    ),
                                   ),
                                 ).then(
                                   (time) {

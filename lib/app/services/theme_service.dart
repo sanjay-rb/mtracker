@@ -47,7 +47,6 @@ class ThemeService {
         labelMedium: TextStyle(color: onDominant),
         labelSmall: TextStyle(color: onDominant),
       ),
-      iconTheme: IconThemeData(color: onDominant),
       scaffoldBackgroundColor: dominant,
       primaryColor: primary,
       primaryColorLight: primary,
@@ -64,6 +63,7 @@ class ThemeService {
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(accent),
           foregroundColor: WidgetStatePropertyAll(onAccent),
+          iconColor: WidgetStatePropertyAll(onAccent),
         ),
       ),
       textButtonTheme: TextButtonThemeData(

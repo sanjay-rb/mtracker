@@ -23,7 +23,16 @@ class SettingsView extends GetView<SettingsController> {
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     const Divider(),
-                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.download),
+                        label: const Text("Export Data as CSV"),
+                        onPressed: () async {
+                          await controller.exportToCSV();
+                        },
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(

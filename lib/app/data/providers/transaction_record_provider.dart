@@ -23,14 +23,11 @@ class TransactionRecordProvider {
       TransactionRecordModel.TABLE_NAME,
       where: 'date_time LIKE ?',
       whereArgs: ['%$currentMonth%'],
+      orderBy: 'date_time DESC',
     );
-    return data
-        .map((e) {
-          return TransactionRecordModel.fromJson(e);
-        })
-        .toList()
-        .reversed
-        .toList();
+    return data.map((e) {
+      return TransactionRecordModel.fromJson(e);
+    }).toList();
   }
 
   static Future<double> readTotalDebit() async {
